@@ -26,7 +26,8 @@ public class BattleScene : SceneBase
 
     public override void HandleInput(GameContext context)
     {
-        int choice = ConsoleUI.ReadMenuChoice(Menu);
+        //int choice = ConsoleUI.ReadMenuChoice(Menu);
+        int choice = ConsoleUI.ReadMenuWithConsoleKey(Menu);
         switch (choice)
         {
             case 1:

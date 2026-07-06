@@ -448,6 +448,29 @@ public static class ConsoleUI
         }
     }
 
+    public static int ReadMenuWithConsoleKey(IEnumerable<MenuOption> options, string prompt = "선택")
+    {
+        Present();
+
+        List<MenuOption> enabledOptions = options.Where(option => option.IsEnabled).ToList();
+        HashSet<int> validNumbers = enabledOptions.Select(option => option.Number).ToHashSet();
+
+        while (true)
+        {
+            WriteColored($"{prompt} > ", ConsoleColor.Green, null, false);
+            ConsoleKeyInfo consoleKey = Console.ReadKey();
+
+            string? input = consoleKey.KeyChar.ToString();
+
+            if (int.TryParse(input, out int number) && validNumbers.Contains(number))
+            {
+                return number;
+            }
+
+            WriteToast("메뉴에 있는 번호를 입력하세요.", ToastType.Warning);
+        }
+    }
+
     public static string ReadString(string prompt, string defaultValue = "")
     {
         Present();

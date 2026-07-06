@@ -26,8 +26,8 @@ public class BattleManager
 	// 플레이어와 적을 생성하고, 초기화하는 함수.
 	public void StartBattleInit(string name)
 	{
-		Player = new Player(name,100,10);
-		Enemy = new Enemy("고블린",40,5);
+		Player = new Player(name,100,1);
+		Enemy = new Enemy("고블린",40,1);
 	}
 	public enum BattleOutcome
 	{
