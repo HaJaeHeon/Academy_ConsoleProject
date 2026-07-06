@@ -32,17 +32,20 @@ public class BattleScene : SceneBase
             case 1:
                 // 플레이어의 공격 Enemy의 Take 데미지
                 BattleManager.BattleOutcome result = BattleManager.Instance.PlayerAttack();
+
                 if (result == BattleManager.BattleOutcome.Continuing)
-                    context.AddLog($"적이 반격했습니다 : 데미지 {BattleManager.Instance.Enemy.Attack}");
+                    context.AddLog($"{BattleManager.Instance.Enemy.Name}이 반격했습니다 : 데미지 {BattleManager.Instance.Enemy.Attack}");
                 else if (result == BattleManager.BattleOutcome.Victory)
                 {
                     context.AddLog($"Victory: {result}");
                     // 마을씬으로 이동
+                    context.Game.ChangeScene(SceneKey.Map);
                 }
                 else if (result == BattleManager.BattleOutcome.Defeat)
                 {
                     context.AddLog("패배했습니다.");
                     // 게임종료
+                    context.Game.RequestQuit();
                 }
 
                 break;

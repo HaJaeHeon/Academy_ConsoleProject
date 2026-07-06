@@ -39,6 +39,8 @@ public class BattleManager
 	public BattleOutcome PlayerAttack()
 	{
 		Enemy.TakeDamage(Player.Attack);
+		GameManager manager  = GameManager.Instance;
+		manager.Context.AddLog($"{Player.Name}(이)가 {Enemy.Name}(을)를 공격했습니다. 데미지 : {Player.Attack}");
 
 		if(!Enemy.IsAlive)
 		{
