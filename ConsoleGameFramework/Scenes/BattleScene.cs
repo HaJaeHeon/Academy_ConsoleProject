@@ -7,7 +7,7 @@ public class BattleScene : SceneBase
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
         new MenuOption(1, "공격","몬스터를 공격합니다."),
-        new MenuOption(0, "포기하고 종료")
+        new MenuOption(0, "포기하고 타이틀로 이동")
     };
 
     public override SceneKey Key => SceneKey.Battle;
@@ -48,7 +48,8 @@ public class BattleScene : SceneBase
                 break;
 
             case 0:
-                context.Game.RequestQuit();
+                //context.Game.RequestQuit();
+                context.Game.ChangeScene(SceneKey.Title);
                 break;
         }
     }

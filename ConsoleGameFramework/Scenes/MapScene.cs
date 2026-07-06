@@ -30,6 +30,20 @@ namespace ConsoleGameFramework_KR.Scenes
              "#........#" ,
              "#..#...E.#" ,
              "#..#.....#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
+             "#........#" ,
              "##########" 
         };
 
@@ -66,7 +80,7 @@ namespace ConsoleGameFramework_KR.Scenes
                     
 
                 case 0:
-                    context.Game.RequestQuit();
+                    context.Game.ChangeScene(SceneKey.Title);
                     break;
             }
         }
