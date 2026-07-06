@@ -199,6 +199,12 @@ public static class ConsoleUI
         Console.WriteLine();
     }
 
+    /// <summary>
+    /// 색상들을 기본 색상으로 바꾸기?
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="foreground"></param>
+    /// <param name="background"></param>
     private static void WriteDirect(string text, ConsoleColor? foreground = null, ConsoleColor? background = null)
     {
         ConsoleColor oldForeground = Console.ForegroundColor;
@@ -231,6 +237,12 @@ public static class ConsoleUI
         _currentLine = new List<ConsoleSpan>();
     }
 
+    /// <summary>
+    /// (화면 깜빡임 방지) 텍스트를 줄 단위로 쪼개어 각 조각의 색상 정보를 유지해 메모리 버퍼에 넣어두기?
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="foreground"></param>
+    /// <param name="background"></param>
     private static void Append(string text, ConsoleColor? foreground = null, ConsoleColor? background = null)
     {
         string[] parts = text.Replace("\r\n", "\n").Replace('\r', '\n').Split('\n');
@@ -304,6 +316,7 @@ public static class ConsoleUI
         }
     }
 
+    //타이틀
     public static void WriteTitle(string title, string subtitle = "")
     {
         WriteRule('═', ConsoleColor.DarkCyan);
@@ -318,6 +331,7 @@ public static class ConsoleUI
         WriteLine();
     }
 
+    //서브 타이틀
     public static void WriteSubtitle(string text)
     {
         WriteLine();
@@ -325,12 +339,14 @@ public static class ConsoleUI
         WriteRule('─', ConsoleColor.DarkGray, 60);
     }
 
+    //깔끔한 UI 를 위해 콘솔 창 크기보다 선이 길어도 줄바꿈하지 않음
     public static void WriteRule(char character = '─', ConsoleColor color = ConsoleColor.DarkGray, int maxWidth = 100)
     {
         int width = Math.Min(SafeWidth, maxWidth);
         WriteColored(new string(character, width), color);
     }
 
+    //중앙 정렬
     public static void WriteCentered(string text, ConsoleColor color = ConsoleColor.White)
     {
         int textWidth = GetDisplayWidth(text);
@@ -502,6 +518,7 @@ public static class ConsoleUI
         Console.ReadKey(true);
     }
 
+    //색상 정보
     public static void WriteToast(string message, ToastType type = ToastType.Info)
     {
         ConsoleColor color = type switch
@@ -601,6 +618,7 @@ public static class ConsoleUI
         WriteLine();
     }
 
+    //표의 칸 별 너비를 기준으로 데이터를 자르거나 늘려주고 공백과 테투리를 가지고 표를 만듦
     private static void WriteTableRow(IReadOnlyList<string> cells, int[] widths, ConsoleColor color)
     {
         WriteColored("|", ConsoleColor.DarkGray, null, false);
@@ -634,7 +652,7 @@ public static class ConsoleUI
                         WriteColored("##", ConsoleColor.DarkGray, null, false);
                         break;
                     case 'P':
-                        WriteColored("¡", ConsoleColor.Cyan, null, false);
+                        WriteColored("옷", ConsoleColor.Cyan, null, false);
                         break;
                     case 'E':
                         WriteColored("@§", ConsoleColor.Yellow, null, false);
@@ -692,6 +710,7 @@ public static class ConsoleUI
         return width;
     }
 
+    //글자 수 제한 및 공백으로 채우기
     public static string Fit(string text, int displayWidth)
     {
         string trimmed = TrimToDisplayWidth(text, displayWidth);
@@ -699,6 +718,7 @@ public static class ConsoleUI
         return trimmed + new string(' ', padding);
     }
 
+    //한글과 영문의 크기를 계산해서 글자를 자르고 '...' 으로 표시하기
     private static string TrimToDisplayWidth(string text, int maxWidth)
     {
         if (GetDisplayWidth(text) <= maxWidth)
@@ -725,6 +745,7 @@ public static class ConsoleUI
         return new string(characters.ToArray()) + "…";
     }
 
+    //글자 크기 제한을 위한 계산법? ex 한글같은거는 2칸씩 차지하기때문에 이걸 2칸으로 계산
     private static bool IsWideCharacter(char character)
     {
         int code = character;
