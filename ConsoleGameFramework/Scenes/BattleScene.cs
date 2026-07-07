@@ -23,7 +23,6 @@ public class BattleScene : SceneBase
     string keyStringValue = "";
 
     public System.Timers.Timer enemyAttackTimer;
-    bool isTImerRun = false;
 
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
@@ -51,27 +50,29 @@ public class BattleScene : SceneBase
         ConsoleUI.WriteLog(context.Logs);        
     }
 
+    //씬 시작 시 타이머를 null로 선언했기때문에
+    //이 부분에서 타이머 달아주고 초기화
     public void MakeTimer()
     {
         if (enemyAttackTimer == null)
         { 
             enemyAttackTimer = new System.Timers.Timer(1000);
-            isTImerRun = true;
             enemyAttackTimer.Interval = BattleManager.Instance.Enemy.AttackRate;
             enemyAttackTimer.Elapsed += OnTimedEvent;
             enemyAttackTimer.AutoReset = true;
             enemyAttackTimer.Enabled = true;
         }
     }
+    //타이머에 등록된 시간마다 enemyAttack 작동
     private void OnTimedEvent(object sender, ElapsedEventArgs e)
     {
-        GameContext context = new GameContext(GameManager.Instance);
+        //GameContext context = new GameContext(GameManager.Instance);
         BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
-
-        this.Render(context);
+        this.Render(GameManager.Instance.Context);
         ConsoleUI.Present();
     }
 
+    //큐에 내가 공격 할 수 있는 커맨드의 값 넣어주기
     public void MakeNodes(GameContext context)
     {
         //일단 10개만큼 넣고 나중에 바꾸기;
@@ -124,6 +125,7 @@ public class BattleScene : SceneBase
         }
     }
 
+    //타이머 리셋
     public void StopTimer()
     {
         enemyAttackTimer.Elapsed -= OnTimedEvent;
