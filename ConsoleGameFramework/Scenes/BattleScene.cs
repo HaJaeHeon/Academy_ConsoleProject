@@ -37,7 +37,7 @@ public class BattleScene : SceneBase
 
     public override void Render(GameContext context)
     {
-        if(AttackNode.Count <= 1)
+        if (AttackNode.Count <= 1)
             MakeNodes(context);
         MakeTimer();
         ConsoleUI.Clear();
@@ -45,10 +45,10 @@ public class BattleScene : SceneBase
         ConsoleUI.WriteSubtitle(BattleManager.Instance.currentEnemy.Description);
         ConsoleUI.WriteCentered($"커맨드 : {keyStringValue}", ConsoleColor.Yellow);
         ConsoleUI.WriteStatusBar(BattleManager.Instance.Player.Name, BattleManager.Instance.Player.Hp, BattleManager.Instance.Player.MaxHp); // 플레이어의 이름과 HP를 가져와야한다.
-        ConsoleUI.WriteStatusBar(BattleManager.Instance.currentEnemy.Name, BattleManager.Instance.currentEnemy.Hp, BattleManager.Instance.currentEnemy.MaxHp, fillColor:ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
+        ConsoleUI.WriteStatusBar(BattleManager.Instance.currentEnemy.Name, BattleManager.Instance.currentEnemy.Hp, BattleManager.Instance.currentEnemy.MaxHp, fillColor: ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
         //BattleManager.Instance.EnemyAttack();
         ConsoleUI.WriteMenu(Menu, "행동 메뉴");
-        ConsoleUI.WriteLog(context.Logs);        
+        ConsoleUI.WriteLog(context.Logs);
     }
 
     //씬 시작 시 타이머를 null로 선언했기때문에
@@ -56,7 +56,7 @@ public class BattleScene : SceneBase
     public void MakeTimer()
     {
         if (enemyAttackTimer == null)
-        { 
+        {
             enemyAttackTimer = new System.Timers.Timer(1000);
             enemyAttackTimer.Interval = BattleManager.Instance.currentEnemy.AttackRate;
             enemyAttackTimer.Elapsed += OnTimedEvent;
@@ -80,10 +80,10 @@ public class BattleScene : SceneBase
         //일단 10개만큼 넣고 나중에 바꾸기;
         for (int i = 0; i < 10; i++)
         {
-            AttackNode.Enqueue(context.Random.Next(1,4));
+            AttackNode.Enqueue(context.Random.Next(1, 4));
         }
         context.AddLog("큐에 10개 넣기");
-        keyStringValue = AttackNode.Dequeue().ToString();        
+        keyStringValue = AttackNode.Dequeue().ToString();
     }
 
     public override void HandleInput(GameContext context)
@@ -92,14 +92,14 @@ public class BattleScene : SceneBase
         //consolekey를 이용해서 키 값을 받아옴
         int choice = ConsoleUI.ReadMenuWithConsoleKey(Menu);
 
-        if(choice == 0)
+        if (choice == 0)
         {
             StopTimer();
             context.Game.ChangeScene(SceneKey.Title);
         }
-        else if(choice.ToString() == keyStringValue)
+        else if (choice.ToString() == keyStringValue)
         {
-           // context.AddLog(choice.ToString());
+            // context.AddLog(choice.ToString());
             keyStringValue = AttackNode.Dequeue().ToString();
             //context.AddLog($"peek 값 : {AttackNode.Peek().ToString()}, 큐에 남은 갯수 : {AttackNode.Count} ");
             BattleManager.BattleOutcome result = BattleManager.Instance.PlayerAttack();
@@ -113,13 +113,13 @@ public class BattleScene : SceneBase
 
     public void BattleResult(GameContext context, BattleManager.BattleOutcome result)
     {
-        if(result == BattleManager.BattleOutcome.Victory)
+        if (result == BattleManager.BattleOutcome.Victory)
         {
             StopTimer();
             context.AddLog($"플레이어: {result}");
             context.Game.ChangeScene(SceneKey.Map);
         }
-        else if(result == BattleManager.BattleOutcome.Defeat)
+        else if (result == BattleManager.BattleOutcome.Defeat)
         {
             StopTimer();
             context.AddLog($"플레이어. {result}");
@@ -130,10 +130,13 @@ public class BattleScene : SceneBase
     //타이머 리셋
     public void StopTimer()
     {
-        enemyAttackTimer.Elapsed -= OnTimedEvent;
-        enemyAttackTimer.AutoReset = false;
-        enemyAttackTimer.Stop();
-        enemyAttackTimer.Dispose();
-        enemyAttackTimer = null;
+        if (enemyAttackTimer != null)
+        {
+            enemyAttackTimer.Elapsed -= OnTimedEvent;
+            enemyAttackTimer.AutoReset = false;
+            enemyAttackTimer.Stop();
+            enemyAttackTimer.Dispose();
+            enemyAttackTimer = null;
+        }
     }
 }
