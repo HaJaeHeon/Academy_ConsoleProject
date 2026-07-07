@@ -45,6 +45,7 @@ public class GameManager
         AddScene(new BattleScene());
         AddScene(new MapScene());
         AddScene(new SelectEnemyScene());
+        AddScene(new ShopScene());
     }
 
     private void AddScene(IScene scene)

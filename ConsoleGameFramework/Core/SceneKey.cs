@@ -13,5 +13,6 @@ public enum SceneKey
     Battle,
     Sample,
     Map,
-    SelectEnemy
+    SelectEnemy,
+    Shop
 }

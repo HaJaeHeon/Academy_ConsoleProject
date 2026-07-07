@@ -12,6 +12,7 @@ public class TitleScene : SceneBase
 {
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
+        new MenuOption(5, "상점 화면으로 이동", "상점을 방문해서 여러 장비아이템을 구매합니다."),
         new MenuOption(4, "적 선택 화면으로 이동", "적을 선택해서 전투를 시작합니다."),
         new MenuOption(3, "지도 화면으로 이동", "플레이어가 월드맵으로 이동합니다."),
         new MenuOption(2, "전투 화면으로 이동", "플레이어와 적의 전투가 시작됩니다."),
@@ -40,6 +41,9 @@ public class TitleScene : SceneBase
         string name = "";
         switch (choice)
         {
+            case 5:
+                GoTo(context, SceneKey.Shop);
+                break;
             case 4:
                 name = ConsoleUI.ReadString("이름을 입력하세요");
                 BattleManager.Instance.StartBattleInit(name);
