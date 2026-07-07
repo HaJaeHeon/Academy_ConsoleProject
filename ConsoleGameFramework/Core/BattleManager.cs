@@ -1,5 +1,7 @@
 ﻿using System;
 using ConsoleGameFramework.Models;
+using System.Timers;
+using System.Numerics;
 
 namespace ConsoleGameFramework.Core;
 
@@ -11,7 +13,7 @@ public class BattleManager
 	{
 		get
 		{
-			if(instance == null)
+			if (instance == null)
 				instance = new BattleManager();
 
 			return instance;
@@ -27,8 +29,8 @@ public class BattleManager
 	// 플레이어와 적을 생성하고, 초기화하는 함수.
 	public void StartBattleInit(string name)
 	{
-		Player = new Player(name,100,20);
-		Enemy = new Enemy("고블린",40,1, "dps 1 / 초당 1번 공격", 1000);
+		Player = new Player(name, 100, 20);
+		Enemy = new Enemy("고블린", 40, 1, "dps 1 / 초당 1번 공격", 1000);
 	}
 	public enum BattleOutcome
 	{
@@ -40,15 +42,13 @@ public class BattleManager
 	public BattleOutcome PlayerAttack()
 	{
 		Enemy.TakeDamage(Player.Attack);
-		GameManager manager  = GameManager.Instance;
+		GameManager manager = GameManager.Instance;
 		manager.Context.AddLog($"{Player.Name}(이)가 {Enemy.Name}(을)를 공격했습니다. 데미지 : {Player.Attack}");
 
-		if(!Enemy.IsAlive)
+		if (!Enemy.IsAlive)
 		{
 			return BattleOutcome.Victory;
 		}
-		// 적이 플레이어를 때리는 함수
-		//Player.TakeDamage(Enemy.Attack);
 
 		if (Player.IsAlive)
 			return BattleOutcome.Continuing;
@@ -56,31 +56,34 @@ public class BattleManager
 			return BattleOutcome.Defeat;
 	}
 
+	//적이 플레이어를 때리는 함수
 	public BattleOutcome EnemyAttack()
 	{
-		while (Enemy.IsAlive)
+		Player.TakeDamage(Enemy.Attack);
+		GameManager manager = GameManager.Instance;
+		manager.Context.AddLog($"{Enemy.Name}(이)가 {Player.Name}(을)를 공격했습니다 데미지 : {Enemy.Attack}");
+
+		if (!Player.IsAlive)
 		{
-			WaitMilliSeconds(Enemy.Attack);
-			Player.TakeDamage(Enemy.Attack);
-			GameManager manager = GameManager.Instance;
-			manager.Context.AddLog($"{Enemy.Name}(이)가 {Player.Name}(을)를 공격했습니다 데미지 : {Enemy.Attack}");
-
-			if (!Player.IsAlive)
-			{
-				return BattleOutcome.Defeat;
-			}
-			// 적이 플레이어를 때리는 함수
-			//Player.TakeDamage(Enemy.Attack);
-
-			if (Enemy.IsAlive)
-				return BattleOutcome.Continuing;
-			else
-				return BattleOutcome.Victory;
+			StopTimer();
+            return BattleOutcome.Defeat;
 		}
-		return BattleOutcome.Victory;
-    }
-    public async Task WaitMilliSeconds(int milliseconds)
-    {
-        await Task.Delay(milliseconds);
-    }
+
+		if (Enemy.IsAlive)
+		{
+            return BattleOutcome.Continuing;
+		}
+		else
+		{
+			StopTimer();
+            return BattleOutcome.Victory;
+		}
+	}
+	
+	public void StopTimer()
+	{
+		BattleScene.Instance.enemyAttackTimer.Stop();
+		BattleScene.Instance.enemyAttackTimer.Dispose();
+	}
 }
+
