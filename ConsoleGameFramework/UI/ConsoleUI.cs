@@ -454,11 +454,16 @@ public static class ConsoleUI
 
         List<MenuOption> enabledOptions = options.Where(option => option.IsEnabled).ToList();
         HashSet<int> validNumbers = enabledOptions.Select(option => option.Number).ToHashSet();
+        ConsoleKey currentKey = ConsoleKey.None;
 
         while (true)
         {
             WriteColored($"{prompt} > ", ConsoleColor.Green, null, false);
-            ConsoleKeyInfo consoleKey = Console.ReadKey();
+            ConsoleKeyInfo consoleKey = Console.ReadKey(true);
+            if (consoleKey.Key == currentKey)
+                continue;
+
+            currentKey = consoleKey.Key;
 
             string? input = consoleKey.KeyChar.ToString();
 

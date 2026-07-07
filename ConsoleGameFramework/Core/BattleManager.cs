@@ -17,6 +17,7 @@ public class BattleManager
 			return instance;
 		}
 	}
+
 	// 플레이어
 	public Player Player { get; private set; }
 
@@ -27,7 +28,7 @@ public class BattleManager
 	public void StartBattleInit(string name)
 	{
 		Player = new Player(name,100,1);
-		Enemy = new Enemy("고블린",40,1);
+		Enemy = new Enemy("고블린",40,5);
 	}
 	public enum BattleOutcome
 	{
@@ -54,5 +55,4 @@ public class BattleManager
 		else
 			return BattleOutcome.Defeat;
 	}
-
 }
