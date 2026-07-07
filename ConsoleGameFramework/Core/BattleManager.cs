@@ -65,7 +65,6 @@ public class BattleManager
 
 		if (!Player.IsAlive)
 		{
-			StopTimer();
             return BattleOutcome.Defeat;
 		}
 
@@ -75,15 +74,8 @@ public class BattleManager
 		}
 		else
 		{
-			StopTimer();
             return BattleOutcome.Victory;
 		}
-	}
-	
-	public void StopTimer()
-	{
-		BattleScene.Instance.enemyAttackTimer.Stop();
-		BattleScene.Instance.enemyAttackTimer.Dispose();
 	}
 }
 

@@ -80,8 +80,7 @@ public class BattleScene : SceneBase
             AttackNode.Enqueue(context.Random.Next(1,4));
         }
         context.AddLog("큐에 10개 넣기");
-        keyStringValue = AttackNode.Dequeue().ToString();
-        
+        keyStringValue = AttackNode.Dequeue().ToString();        
     }
 
     public override void HandleInput(GameContext context)
@@ -92,6 +91,7 @@ public class BattleScene : SceneBase
 
         if(choice == 0)
         {
+            StopTimer();
             context.Game.ChangeScene(SceneKey.Title);
         }
         else if(choice.ToString() == keyStringValue)
@@ -112,13 +112,24 @@ public class BattleScene : SceneBase
     {
         if(result == BattleManager.BattleOutcome.Victory)
         {
+            StopTimer();
             context.AddLog($"Victory: {result}");
             context.Game.ChangeScene(SceneKey.Map);
         }
         else if(result == BattleManager.BattleOutcome.Defeat)
         {
+            StopTimer();
             context.AddLog($"Defeat. {result}");
             context.Game.ChangeScene(SceneKey.Title);
         }
+    }
+
+    public void StopTimer()
+    {
+        enemyAttackTimer.Elapsed -= OnTimedEvent;
+        enemyAttackTimer.AutoReset = false;
+        enemyAttackTimer.Stop();
+        enemyAttackTimer.Dispose();
+        enemyAttackTimer = null;
     }
 }
