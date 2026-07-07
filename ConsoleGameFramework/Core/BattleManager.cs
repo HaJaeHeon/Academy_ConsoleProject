@@ -24,13 +24,21 @@ public class BattleManager
 	public Player Player { get; private set; }
 
 	// 적
-	public Enemy Enemy { get; private set; }
+	public Enemy Goblin { get; private set; }
+	public Enemy Ghost { get; private set; }
+	public Enemy Hydra { get; private set; }
+
+	public Enemy currentEnemy { get; set; }
 
 	// 플레이어와 적을 생성하고, 초기화하는 함수.
 	public void StartBattleInit(string name)
 	{
-		Player = new Player(name, 100, 20);
-		Enemy = new Enemy("고블린", 40, 1, "dps 1 / 초당 1번 공격", 1000);
+		Player = new Player(name, 100, 10);
+		if(currentEnemy == null)
+			currentEnemy = new Enemy(EnemyType.None, "???", 100, 1, "DPS 10", 100);
+        Goblin = new Enemy(EnemyType.Goblin, "고블린", 40, 1, "DPS 1", 1000);
+		Ghost = new Enemy(EnemyType.Ghost, "유령", 20, 2, "DPS 2 ", 500);
+		Hydra = new Enemy(EnemyType.Hydra, "히드라", 60, 2, "DPS 4 ", 250);
 	}
 	public enum BattleOutcome
 	{
@@ -41,11 +49,11 @@ public class BattleManager
 	// 플레이어가 적을 공격하는 함수
 	public BattleOutcome PlayerAttack()
 	{
-		Enemy.TakeDamage(Player.Attack);
+        currentEnemy.TakeDamage(Player.Attack);
 		GameManager manager = GameManager.Instance;
-		manager.Context.AddLog($"{Player.Name}(이)가 {Enemy.Name}(을)를 공격했습니다. 데미지 : {Player.Attack}");
+		manager.Context.AddLog($"{Player.Name}(이)가 {currentEnemy.Name}(을)를 공격했습니다. 데미지 : {Player.Attack}");
 
-		if (!Enemy.IsAlive)
+		if (!currentEnemy.IsAlive)
 		{
 			return BattleOutcome.Victory;
 		}
@@ -59,16 +67,16 @@ public class BattleManager
 	//적이 플레이어를 때리는 함수
 	public BattleOutcome EnemyAttack()
 	{
-		Player.TakeDamage(Enemy.Attack);
+		Player.TakeDamage(currentEnemy.Attack);
 		GameManager manager = GameManager.Instance;
-		manager.Context.AddLog($"{Enemy.Name}(이)가 {Player.Name}(을)를 공격했습니다 데미지 : {Enemy.Attack}");
+		manager.Context.AddLog($"{currentEnemy.Name}(이)가 {Player.Name}(을)를 공격했습니다 데미지 : {currentEnemy.Attack}");
 
 		if (!Player.IsAlive)
 		{
             return BattleOutcome.Defeat;
 		}
 
-		if (Enemy.IsAlive)
+		if (currentEnemy.IsAlive)
 		{
             return BattleOutcome.Continuing;
 		}

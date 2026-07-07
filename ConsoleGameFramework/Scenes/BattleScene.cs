@@ -1,4 +1,5 @@
 ﻿using ConsoleGameFramework.Core;
+using ConsoleGameFramework.Models;
 using ConsoleGameFramework.UI;
 using System;
 using System.Timers;
@@ -41,10 +42,10 @@ public class BattleScene : SceneBase
         MakeTimer();
         ConsoleUI.Clear();
         ConsoleUI.WriteTitle("전투씬");
-        ConsoleUI.WriteSubtitle(BattleManager.Instance.Enemy.Description);
+        ConsoleUI.WriteSubtitle(BattleManager.Instance.currentEnemy.Description);
         ConsoleUI.WriteCentered($"커맨드 : {keyStringValue}", ConsoleColor.Yellow);
         ConsoleUI.WriteStatusBar(BattleManager.Instance.Player.Name, BattleManager.Instance.Player.Hp, BattleManager.Instance.Player.MaxHp); // 플레이어의 이름과 HP를 가져와야한다.
-        ConsoleUI.WriteStatusBar(BattleManager.Instance.Enemy.Name, BattleManager.Instance.Enemy.Hp, BattleManager.Instance.Enemy.MaxHp, fillColor:ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
+        ConsoleUI.WriteStatusBar(BattleManager.Instance.currentEnemy.Name, BattleManager.Instance.currentEnemy.Hp, BattleManager.Instance.currentEnemy.MaxHp, fillColor:ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
         //BattleManager.Instance.EnemyAttack();
         ConsoleUI.WriteMenu(Menu, "행동 메뉴");
         ConsoleUI.WriteLog(context.Logs);        
@@ -57,7 +58,7 @@ public class BattleScene : SceneBase
         if (enemyAttackTimer == null)
         { 
             enemyAttackTimer = new System.Timers.Timer(1000);
-            enemyAttackTimer.Interval = BattleManager.Instance.Enemy.AttackRate;
+            enemyAttackTimer.Interval = BattleManager.Instance.currentEnemy.AttackRate;
             enemyAttackTimer.Elapsed += OnTimedEvent;
             enemyAttackTimer.AutoReset = true;
             enemyAttackTimer.Enabled = true;
@@ -70,6 +71,7 @@ public class BattleScene : SceneBase
         BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
         this.Render(GameManager.Instance.Context);
         ConsoleUI.Present();
+        BattleResult(GameManager.Instance.Context, outcome);
     }
 
     //큐에 내가 공격 할 수 있는 커맨드의 값 넣어주기
@@ -114,13 +116,13 @@ public class BattleScene : SceneBase
         if(result == BattleManager.BattleOutcome.Victory)
         {
             StopTimer();
-            context.AddLog($"Victory: {result}");
+            context.AddLog($"플레이어: {result}");
             context.Game.ChangeScene(SceneKey.Map);
         }
         else if(result == BattleManager.BattleOutcome.Defeat)
         {
             StopTimer();
-            context.AddLog($"Defeat. {result}");
+            context.AddLog($"플레이어. {result}");
             context.Game.ChangeScene(SceneKey.Title);
         }
     }
