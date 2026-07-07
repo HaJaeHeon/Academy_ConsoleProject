@@ -5,7 +5,7 @@ using System;
 public class BattleScene : SceneBase
 {
     //플레이어 어택 큐
-    Queue<int> AttackNode = new Queue<int>();
+    public Queue<int> AttackNode = new Queue<int>();
     Random random = new Random();
 
     string keyStringValue = "";
@@ -22,26 +22,28 @@ public class BattleScene : SceneBase
 
     public override void Render(GameContext context)
     {
-        MakeNodes();
+        if(AttackNode.Count < 2)
+            MakeNodes(context);
         ConsoleUI.Clear();
         ConsoleUI.WriteTitle("전투씬", "스테이지 : 1");
-        keyStringValue = AttackNode.Dequeue().ToString();
         ConsoleUI.WriteCentered($"커맨드 : {keyStringValue}", ConsoleColor.Yellow);
         ConsoleUI.WriteStatusBar(BattleManager.Instance.Player.Name, BattleManager.Instance.Player.Hp, BattleManager.Instance.Player.MaxHp); // 플레이어의 이름과 HP를 가져와야한다.
         ConsoleUI.WriteStatusBar(BattleManager.Instance.Enemy.Name, BattleManager.Instance.Enemy.Hp, BattleManager.Instance.Enemy.MaxHp,fillColor:ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
 
         ConsoleUI.WriteMenu(Menu, "행동 메뉴");
-        ConsoleUI.WriteLog(context.Logs);
-        
+        ConsoleUI.WriteLog(context.Logs);        
     }
 
-    public void MakeNodes()
+    public void MakeNodes(GameContext context)
     {
-        //일단 100개만큼 넣고 나중에 바꾸기;
-        for (int i = 0; i < 100; i++)
+        //일단 10개만큼 넣고 나중에 바꾸기;
+        for (int i = 0; i < 10; i++)
         {
             AttackNode.Enqueue(random.Next(1,4));
         }
+        context.AddLog("큐에 10개 넣기");
+        keyStringValue = AttackNode.Dequeue().ToString();
+        
     }
 
     public override async void HandleInput(GameContext context)
@@ -57,6 +59,13 @@ public class BattleScene : SceneBase
         else if(choice.ToString() == keyStringValue)
         {
             context.AddLog(choice.ToString());
+            keyStringValue = AttackNode.Dequeue().ToString();
+            context.AddLog($"peek 값 : {AttackNode.Peek().ToString()}, 큐에 남은 갯수 : {AttackNode.Count} ");
+            BattleManager.BattleOutcome result = BattleManager.Instance.PlayerAttack();
+        }
+        else
+        {
+            context.AddLog("잘못된 공격");
         }
         /*
         switch (choice)
