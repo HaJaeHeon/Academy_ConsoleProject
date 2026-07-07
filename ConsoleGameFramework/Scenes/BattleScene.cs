@@ -71,7 +71,9 @@ public class BattleScene : SceneBase
         BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
         this.Render(GameManager.Instance.Context);
         ConsoleUI.Present();
+        //GameManager.Instance.Context.AddLog("???");
         BattleResult(GameManager.Instance.Context, outcome);
+        //GameManager.Instance.Context.AddLog("!!!");
     }
 
     //큐에 내가 공격 할 수 있는 커맨드의 값 넣어주기

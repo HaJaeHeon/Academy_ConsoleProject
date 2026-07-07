@@ -73,15 +73,18 @@ public class BattleManager
 
 		if (!Player.IsAlive)
 		{
-            return BattleOutcome.Defeat;
+			manager.Context.AddLog("enemyAttak.PlayerDIe");
+			return BattleOutcome.Defeat;
 		}
 
 		if (currentEnemy.IsAlive)
 		{
+			manager.Context.AddLog("enemyAttack,Continue");
             return BattleOutcome.Continuing;
 		}
 		else
 		{
+			manager.Context.AddLog("EnemyDIe");
             return BattleOutcome.Victory;
 		}
 	}
