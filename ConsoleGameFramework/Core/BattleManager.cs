@@ -5,7 +5,7 @@ namespace ConsoleGameFramework.Core;
 
 public class BattleManager
 {
-	private static BattleManager instance = null;
+	private static BattleManager? instance = null;
 
 	public static BattleManager Instance
 	{
@@ -27,8 +27,8 @@ public class BattleManager
 	// 플레이어와 적을 생성하고, 초기화하는 함수.
 	public void StartBattleInit(string name)
 	{
-		Player = new Player(name,100,1);
-		Enemy = new Enemy("고블린",40,5);
+		Player = new Player(name,100,20);
+		Enemy = new Enemy("고블린",40,1, "dps 1 / 초당 1번 공격", 1000);
 	}
 	public enum BattleOutcome
 	{
@@ -48,11 +48,39 @@ public class BattleManager
 			return BattleOutcome.Victory;
 		}
 		// 적이 플레이어를 때리는 함수
-		Player.TakeDamage(Enemy.Attack);
+		//Player.TakeDamage(Enemy.Attack);
 
 		if (Player.IsAlive)
 			return BattleOutcome.Continuing;
 		else
 			return BattleOutcome.Defeat;
 	}
+
+	public BattleOutcome EnemyAttack()
+	{
+		while (Enemy.IsAlive)
+		{
+			WaitMilliSeconds(Enemy.Attack);
+			Player.TakeDamage(Enemy.Attack);
+			GameManager manager = GameManager.Instance;
+			manager.Context.AddLog($"{Enemy.Name}(이)가 {Player.Name}(을)를 공격했습니다 데미지 : {Enemy.Attack}");
+
+			if (!Player.IsAlive)
+			{
+				return BattleOutcome.Defeat;
+			}
+			// 적이 플레이어를 때리는 함수
+			//Player.TakeDamage(Enemy.Attack);
+
+			if (Enemy.IsAlive)
+				return BattleOutcome.Continuing;
+			else
+				return BattleOutcome.Victory;
+		}
+		return BattleOutcome.Victory;
+    }
+    public async Task WaitMilliSeconds(int milliseconds)
+    {
+        await Task.Delay(milliseconds);
+    }
 }

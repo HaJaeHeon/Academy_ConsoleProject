@@ -458,7 +458,7 @@ public static class ConsoleUI
 
         while (true)
         {
-            WriteColored($"{prompt} > ", ConsoleColor.Green, null, false);
+            //WriteColored($"{prompt} > ", ConsoleColor.Green, null, false);
             ConsoleKeyInfo consoleKey = Console.ReadKey(true);
             if (consoleKey.Key == currentKey)
                 continue;

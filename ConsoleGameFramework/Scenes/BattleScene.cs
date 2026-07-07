@@ -25,11 +25,12 @@ public class BattleScene : SceneBase
         if(AttackNode.Count < 2)
             MakeNodes(context);
         ConsoleUI.Clear();
-        ConsoleUI.WriteTitle("전투씬", "스테이지 : 1");
+        ConsoleUI.WriteTitle("전투씬");
+        ConsoleUI.WriteSubtitle(BattleManager.Instance.Enemy.Description);
         ConsoleUI.WriteCentered($"커맨드 : {keyStringValue}", ConsoleColor.Yellow);
         ConsoleUI.WriteStatusBar(BattleManager.Instance.Player.Name, BattleManager.Instance.Player.Hp, BattleManager.Instance.Player.MaxHp); // 플레이어의 이름과 HP를 가져와야한다.
-        ConsoleUI.WriteStatusBar(BattleManager.Instance.Enemy.Name, BattleManager.Instance.Enemy.Hp, BattleManager.Instance.Enemy.MaxHp,fillColor:ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
-
+        ConsoleUI.WriteStatusBar(BattleManager.Instance.Enemy.Name, BattleManager.Instance.Enemy.Hp, BattleManager.Instance.Enemy.MaxHp, fillColor:ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
+        BattleManager.Instance.EnemyAttack();
         ConsoleUI.WriteMenu(Menu, "행동 메뉴");
         ConsoleUI.WriteLog(context.Logs);        
     }
@@ -58,10 +59,11 @@ public class BattleScene : SceneBase
         }
         else if(choice.ToString() == keyStringValue)
         {
-            context.AddLog(choice.ToString());
+           // context.AddLog(choice.ToString());
             keyStringValue = AttackNode.Dequeue().ToString();
-            context.AddLog($"peek 값 : {AttackNode.Peek().ToString()}, 큐에 남은 갯수 : {AttackNode.Count} ");
+            //context.AddLog($"peek 값 : {AttackNode.Peek().ToString()}, 큐에 남은 갯수 : {AttackNode.Count} ");
             BattleManager.BattleOutcome result = BattleManager.Instance.PlayerAttack();
+            BattleResult(context, result);
         }
         else
         {
@@ -97,6 +99,23 @@ public class BattleScene : SceneBase
         }       
         */
     }
+
+    public async Task BattleResult(GameContext context, BattleManager.BattleOutcome result)
+    {
+        if(result == BattleManager.BattleOutcome.Victory)
+        {
+            context.AddLog($"Victory: {result}");
+            //await WaitMilliSeconds(2000);
+            context.Game.ChangeScene(SceneKey.Map);
+        }
+        else if(result == BattleManager.BattleOutcome.Defeat)
+        {
+            context.AddLog($"Defeat. {result}");
+            //await WaitMilliSeconds(2000);
+            context.Game.ChangeScene(SceneKey.Title);
+        }
+    }
+
 
     public async Task WaitMilliSeconds(int  milliseconds)
     {
