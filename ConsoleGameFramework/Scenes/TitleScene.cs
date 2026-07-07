@@ -12,6 +12,7 @@ public class TitleScene : SceneBase
 {
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
+        new MenuOption(4, "적 선택 화면으로 이동", "적을 선택해서 전투를 시작합니다."),
         new MenuOption(3, "지도 화면으로 이동", "플레이어가 월드맵으로 이동합니다."),
         new MenuOption(2, "전투 화면으로 이동", "플레이어와 적의 전투가 시작됩니다."),
         new MenuOption(1, "샘플 화면으로 이동", "ConsoleUI의 다른 기능들을 보여주는 화면으로 이동합니다."),
@@ -36,13 +37,19 @@ public class TitleScene : SceneBase
     public override void HandleInput(GameContext context)
     {
         int choice = ConsoleUI.ReadMenuChoice(Menu);
+        string name = "";
         switch (choice)
         {
+            case 4:
+                name = ConsoleUI.ReadString("이름을 입력하세요");
+                BattleManager.Instance.StartBattleInit(name);
+                GoTo(context, SceneKey.SelectEnemy);
+                break;
             case 3:
                 GoTo(context, SceneKey.Map);
                 break;
             case 2:
-                string name = ConsoleUI.ReadString("이름을 입력하세요");
+                name = ConsoleUI.ReadString("이름을 입력하세요");
                 BattleManager.Instance.StartBattleInit(name);
                 GoTo(context, SceneKey.Battle);
                 break;

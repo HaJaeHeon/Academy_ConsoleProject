@@ -12,5 +12,6 @@ public enum SceneKey
     Title,
     Battle,
     Sample,
-    Map
+    Map,
+    SelectEnemy
 }
