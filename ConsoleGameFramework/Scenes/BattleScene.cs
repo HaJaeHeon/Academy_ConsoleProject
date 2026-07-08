@@ -30,14 +30,15 @@ public class BattleScene : SceneBase
         new MenuOption(1, "1 공격","몬스터를 공격합니다."),
         new MenuOption(2, "2 공격","몬스터를 공격합니다."),
         new MenuOption(3, "3 공격","몬스터를 공격합니다."),
-        new MenuOption(0, "포기하고 타이틀로 이동")
+        new MenuOption(9, "타이틀로", "전투를 포기하고, 첫 화면으로 돌아갑니다."),
+        new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
 
     public override SceneKey Key => SceneKey.Battle;
 
     public override void Render(GameContext context)
     {
-        if (AttackNode.Count <= 1)
+        if (AttackNode.Count <= 2)
             MakeNodes(context);
         MakeTimer();
         ConsoleUI.Clear();
@@ -46,7 +47,6 @@ public class BattleScene : SceneBase
         ConsoleUI.WriteCentered($"커맨드 : {keyStringValue}", ConsoleColor.Yellow);
         ConsoleUI.WriteStatusBar(BattleManager.Instance.Player.Name, BattleManager.Instance.Player.Hp, BattleManager.Instance.Player.MaxHp); // 플레이어의 이름과 HP를 가져와야한다.
         ConsoleUI.WriteStatusBar(BattleManager.Instance.currentEnemy.Name, BattleManager.Instance.currentEnemy.Hp, BattleManager.Instance.currentEnemy.MaxHp, fillColor: ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
-        //BattleManager.Instance.EnemyAttack();
         ConsoleUI.WriteMenu(Menu, "행동 메뉴");
         ConsoleUI.WriteLog(context.Logs);
     }
@@ -69,13 +69,10 @@ public class BattleScene : SceneBase
     {
         BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
         this.Render(GameManager.Instance.Context);
-        GameManager.Instance.Context.AddLog("aaa");
         ConsoleUI.Present();
-        GameManager.Instance.Context.AddLog("???");
 
         if (outcome != BattleManager.BattleOutcome.Continuing)
         {
-            GameManager.Instance.Context.AddLog("!!!");
             BattleResult(GameManager.Instance.Context, outcome);
         }
     }
@@ -84,7 +81,7 @@ public class BattleScene : SceneBase
     public void MakeNodes(GameContext context)
     {
         //일단 10개만큼 넣고 나중에 바꾸기;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
             AttackNode.Enqueue(context.Random.Next(1, 4));
         }
@@ -92,9 +89,10 @@ public class BattleScene : SceneBase
         keyStringValue = AttackNode.Dequeue().ToString();
     }
 
+
     public override void HandleInput(GameContext context)
     {
-        //int choice = ConsoleUI.ReadMenuChoice(Menu);
+        //this.Render(context);
         //consolekey를 이용해서 키 값을 받아옴
         int choice = ConsoleUI.ReadMenuWithConsoleKey(Menu);
 
