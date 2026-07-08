@@ -6,18 +6,18 @@ using System.Timers;
 
 public class BattleScene : SceneBase
 {
-    private static BattleScene? instance = null;
+    //private static BattleScene? instance = null;
 
-    public static BattleScene Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = new BattleScene();
+    //public static BattleScene Instance
+    //{
+    //    get
+    //    {
+    //        if (instance == null)
+    //            instance = new BattleScene();
 
-            return instance;
-        }
-    }
+    //        return instance;
+    //    }
+    //}
     //플레이어 어택 큐
     public Queue<int> AttackNode = new Queue<int>();
 
@@ -67,13 +67,17 @@ public class BattleScene : SceneBase
     //타이머에 등록된 시간마다 enemyAttack 작동
     private void OnTimedEvent(object sender, ElapsedEventArgs e)
     {
-        //GameContext context = new GameContext(GameManager.Instance);
         BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
         this.Render(GameManager.Instance.Context);
+        GameManager.Instance.Context.AddLog("aaa");
         ConsoleUI.Present();
-        //GameManager.Instance.Context.AddLog("???");
-        BattleResult(GameManager.Instance.Context, outcome);
-        //GameManager.Instance.Context.AddLog("!!!");
+        GameManager.Instance.Context.AddLog("???");
+
+        if (outcome != BattleManager.BattleOutcome.Continuing)
+        {
+            GameManager.Instance.Context.AddLog("!!!");
+            BattleResult(GameManager.Instance.Context, outcome);
+        }
     }
 
     //큐에 내가 공격 할 수 있는 커맨드의 값 넣어주기

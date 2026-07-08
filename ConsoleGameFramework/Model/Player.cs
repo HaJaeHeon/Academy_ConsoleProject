@@ -2,10 +2,18 @@
 
 namespace ConsoleGameFramework.Models;
 
+public enum Equipment
+{
+	None,
+	Sword,
+	Sheild
+}
+
 public class Player : Character
 {
-	public Player(string name, int maxHp, int attack) : base(name, maxHp, attack)
+	Equipment equipment;
+	public Player(string name, int maxHp, int attack, Equipment equip) : base(name, maxHp, attack)
 	{
-
+		equipment = equip;
 	}
 }

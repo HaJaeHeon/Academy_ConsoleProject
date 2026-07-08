@@ -7,7 +7,7 @@ namespace ConsoleGameFramework.Core;
 
 public class BattleManager
 {
-	private static BattleManager? instance = null;
+	private static BattleManager instance = null;
 
 	public static BattleManager Instance
 	{
@@ -33,9 +33,10 @@ public class BattleManager
 	// 플레이어와 적을 생성하고, 초기화하는 함수.
 	public void StartBattleInit(string name)
 	{
-		Player = new Player(name, 100, 10);
+		Player = new Player(name, 100, 10, Equipment.None);
+
 		if(currentEnemy == null)
-			currentEnemy = new Enemy(EnemyType.None, "???", 100, 1, "DPS 10", 100);
+			currentEnemy = new Enemy(EnemyType.None, "???", 100, 30, "DPS 300", 500);
         Goblin = new Enemy(EnemyType.Goblin, "고블린", 40, 1, "DPS 1", 1000);
 		Ghost = new Enemy(EnemyType.Ghost, "유령", 20, 2, "DPS 2 ", 500);
 		Hydra = new Enemy(EnemyType.Hydra, "히드라", 60, 2, "DPS 4 ", 250);

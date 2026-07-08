@@ -14,5 +14,6 @@ public enum SceneKey
     Sample,
     Map,
     SelectEnemy,
-    Shop
+    Shop,
+    Inventory
 }

@@ -12,6 +12,7 @@ public class TitleScene : SceneBase
 {
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
+        new MenuOption(6, "인벤토리 화면으로 이동", "현재 인벤토리 내의 아이템 목록들을 출력하고 아이템을 선택해서 장비합니다."),
         new MenuOption(5, "상점 화면으로 이동", "상점을 방문해서 여러 장비아이템을 구매합니다."),
         new MenuOption(4, "적 선택 화면으로 이동", "적을 선택해서 전투를 시작합니다."),
         new MenuOption(3, "지도 화면으로 이동", "플레이어가 월드맵으로 이동합니다."),
@@ -41,6 +42,9 @@ public class TitleScene : SceneBase
         string name = "";
         switch (choice)
         {
+            case 6:
+                GoTo(context, SceneKey.Inventory);
+                break;
             case 5:
                 GoTo(context, SceneKey.Shop);
                 break;
