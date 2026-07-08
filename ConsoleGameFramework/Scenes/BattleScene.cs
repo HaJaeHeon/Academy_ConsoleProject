@@ -6,18 +6,6 @@ using System.Timers;
 
 public class BattleScene : SceneBase
 {
-    //private static BattleScene? instance = null;
-
-    //public static BattleScene Instance
-    //{
-    //    get
-    //    {
-    //        if (instance == null)
-    //            instance = new BattleScene();
-
-    //        return instance;
-    //    }
-    //}
     //플레이어 어택 큐
     public Queue<int> AttackNode = new Queue<int>();
 
@@ -121,7 +109,7 @@ public class BattleScene : SceneBase
         {
             StopTimer();
             context.AddLog($"플레이어: {result}");
-            context.Game.ChangeScene(SceneKey.Map);
+            context.Game.ChangeScene(SceneKey.Title);
         }
         else if (result == BattleManager.BattleOutcome.Defeat)
         {

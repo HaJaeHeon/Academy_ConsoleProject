@@ -5,7 +5,7 @@ namespace ConsoleGameFramework_KR.Scenes
 {
     public class InventoryScene : SceneBase
     {
-
+        public static List<int> EquipList = new List<int>();
         private static readonly List<MenuOption> Menu = new List<MenuOption>
         {
         new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),

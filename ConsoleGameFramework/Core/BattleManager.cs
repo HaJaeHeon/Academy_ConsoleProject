@@ -33,7 +33,7 @@ public class BattleManager
 	// 플레이어와 적을 생성하고, 초기화하는 함수.
 	public void StartBattleInit(string name)
 	{
-		Player = new Player(name, 100, 1, Equipment.None);
+		Player = new Player(name, 100, 10, Equipment.None);
 
 		if(currentEnemy == null)
 			currentEnemy = new Enemy(EnemyType.None, "???", 100, 30, "DPS 60", 500);
@@ -48,6 +48,7 @@ public class BattleManager
 		Defeat
 	}
 	// 플레이어가 적을 공격하는 함수
+	//플레이어가 hp를 60 이상 남기고 클리어(승리) 했을 시 업적을 추가함
 	public BattleOutcome PlayerAttack()
 	{
         currentEnemy.TakeDamage(Player.Attack);
@@ -56,16 +57,13 @@ public class BattleManager
 
 		if (!currentEnemy.IsAlive)
 		{
-			manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsGoblin}");
-			manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsGhost}");
-			manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsHydra}");
-			if (Player.Hp > 60)
+			if (Player.Hp  > 60)
+			{
+				PrintAchievementLog(manager);
 				GameSettingManager.Instance.UnlockAchievement(currentEnemy);
-
-            manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsGoblin}");
-            manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsGhost}");
-            manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsHydra}");
-			return BattleOutcome.Victory;
+				PrintAchievementLog(manager);
+			}
+            return BattleOutcome.Victory;
         }
 
 		if (Player.IsAlive)
@@ -98,5 +96,13 @@ public class BattleManager
             return BattleOutcome.Victory;
 		}
 	}
+
+	//플레이어가 업적 달성했는지 찍어보는 로그
+	public void PrintAchievementLog(GameManager manager)
+	{
+        manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsGoblin}");
+        manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsGhost}");
+        manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsHydra}");
+    }
 }
 

@@ -18,4 +18,9 @@ public readonly struct MenuOption
         Description = description;
         IsEnabled = isEnabled;
     }
+
+    public MenuOption ChangeEnable(bool isEnable)
+    {
+        return new MenuOption(Number, Label, Description, isEnable);
+    }
 }
