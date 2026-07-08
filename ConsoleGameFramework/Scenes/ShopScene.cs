@@ -6,7 +6,7 @@ namespace ConsoleGameFramework_KR.Scenes
     public class ShopScene : SceneBase
     {
         private static readonly List<MenuOption> Menu = new List<MenuOption>
-        { 
+        {
         new MenuOption(1, "검 (30 G)","검 - 3연속으로 커맨드를 정확히 입력하면 크리티컬 대미지를 입힙니다."),
         new MenuOption(2, "방패 (50 G)", "방패 - 5연속으로 커맨드를 정확히 입력하면  HP를 회복합니다."),
         new MenuOption(3, "공격력의 비약 (300 G)", "공격력의 비약 - 플레이어의 기본 공격력을 1 증가시킵니다."),
@@ -46,7 +46,7 @@ namespace ConsoleGameFramework_KR.Scenes
                     if (purchase)
                     {
                         EnableMenuOption(Menu, choice);
-                        PurchaseItem(Menu, choice);
+                        PurchaseItem(Menu, iManager, choice);
                     }
                     break;
                 case 2:
@@ -54,21 +54,21 @@ namespace ConsoleGameFramework_KR.Scenes
                     if (purchase)
                     {
                         EnableMenuOption(Menu, choice);
-                        PurchaseItem(Menu, choice);
+                        PurchaseItem(Menu, iManager, choice);
                     }
                     break;
                 case 3:
                     purchase = ConsoleUI.Confirm("정말로 구매하시겠습니까?");
                     if (purchase)
                     {
-                        PurchaseItem(Menu, choice);
+                        PurchaseItem(Menu, iManager, choice);
                     }
                     break;
                 case 4:
                     purchase = ConsoleUI.Confirm("정말로 구매하시겠습니까?");
                     if (purchase)
                     {
-                        PurchaseItem(Menu, choice);
+                        PurchaseItem(Menu, iManager, choice);
                     }
                     break;
                 case 9:
@@ -84,22 +84,31 @@ namespace ConsoleGameFramework_KR.Scenes
         public void EnableMenuOption(IEnumerable<MenuOption> options, int num)
         {
             int index = Menu.FindIndex(option => option.Number == num);
-            
-            if (index != -1)
-            {
-                Menu[index] = Menu[index].ChangeEnable(false);
 
-                Console.WriteLine("검이 품절 처리되었습니다!");
-            }
-        }
-
-        public void PurchaseItem(IEnumerable<MenuOption> options, int num)
-        {
-            int index = Menu.FindIndex(option => option.Number == num);
             if (index != -1)
             {
                 GameManager manager = GameManager.Instance;
-                manager.Context.AddLog($"{Menu[num - 1].Label}을 구매했습니다.");
+                Menu[index] = Menu[index].ChangeEnable(false);
+                manager.Context.AddLog($"{Menu[index].Label}이 품절 처리되었습니다");
+            }
+        }
+
+        public void PurchaseItem(IEnumerable<MenuOption> options, InventoryManager iManager, int num)
+        {
+            GameManager gManager = GameManager.Instance;
+            if (iManager.InventoryList.Count >= 10)
+            {
+                gManager.Context.AddLog($"2인벤토리가 가득 찼습니다.");
+                return;
+            }
+
+            int index = Menu.FindIndex(option => option.Number == num);
+
+            if (index != -1)
+            {
+                iManager.PurchaseItem(index);
+
+                gManager.Context.AddLog($"{Menu[index].Label}을 구매했습니다.");
             }
         }
     }
