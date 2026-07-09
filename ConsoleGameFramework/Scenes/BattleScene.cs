@@ -28,6 +28,7 @@ public class BattleScene : SceneBase
 
     public override void Render(GameContext context)
     {
+        //***이 부분 if 위치 바꾸기
         if (attackCount != 0)
             attackCount = 0;
         if (AttackNode.Count <= 2)
@@ -86,7 +87,7 @@ public class BattleScene : SceneBase
     {
         this.Render(context);
         //consolekey를 이용해서 키 값을 받아옴
-        int choice = ConsoleUI.ReadMenuChoice(Menu);
+        int choice = ConsoleUI.ReadMenuWithConsoleKey(Menu);
         if(choice == 9)
         {
             context.Game.ChangeScene(SceneKey.Title);
@@ -98,6 +99,7 @@ public class BattleScene : SceneBase
         }
         else if (choice.ToString() == keyStringValue)
         {
+            attackCount++;
             //context.AddLog(choice.ToString());
             keyStringValue = AttackNode.Dequeue().ToString();
             //context.AddLog($"peek 값 : {AttackNode.Peek().ToString()}, 큐에 남은 갯수 : {AttackNode.Count} ");

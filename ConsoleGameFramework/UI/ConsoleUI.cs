@@ -124,7 +124,7 @@ public static class ConsoleUI
         }
 
         int width = SafeWidth;
-        int lineCount = _frameLines.Count;
+        int lineCount = _frameLines.Count-1;
         int occupiedLineCount = Math.Max(_lastPresentedLineCount, GetCursorTopOrZero() + 1);
         int linesToClear = Math.Max(0, occupiedLineCount - lineCount);
 
@@ -448,33 +448,33 @@ public static class ConsoleUI
         }
     }
 
-    //public static int ReadMenuWithConsoleKey(IEnumerable<MenuOption> options, string prompt = "선택")
-    //{
-    //    Present();
+    public static int ReadMenuWithConsoleKey(IEnumerable<MenuOption> options, string prompt = "선택")
+    {
+        Present();
 
-    //    List<MenuOption> enabledOptions = options.Where(option => option.IsEnabled).ToList();
-    //    HashSet<int> validNumbers = enabledOptions.Select(option => option.Number).ToHashSet();
-    //    ConsoleKey currentKey = ConsoleKey.None;
+        List<MenuOption> enabledOptions = options.Where(option => option.IsEnabled).ToList();
+        HashSet<int> validNumbers = enabledOptions.Select(option => option.Number).ToHashSet();
+        ConsoleKey currentKey = ConsoleKey.None;
 
-    //    while (true)
-    //    {
-    //        //WriteColored($"{prompt} > ", ConsoleColor.Green, null, false);
-    //        ConsoleKeyInfo consoleKey = Console.ReadKey(true);
-    //        if (consoleKey.Key == currentKey)
-    //            continue;
+        while (true)
+        {
+            //WriteColored($"{prompt} > ", ConsoleColor.Green, null, false);
+            ConsoleKeyInfo consoleKey = Console.ReadKey(true);
+            if (consoleKey.Key == currentKey)
+                continue;
 
-    //        currentKey = consoleKey.Key;
+            currentKey = consoleKey.Key;
 
-    //        string? input = consoleKey.KeyChar.ToString();
+            string? input = consoleKey.KeyChar.ToString();
 
-    //        if (int.TryParse(input, out int number) && validNumbers.Contains(number))
-    //        {
-    //            return number;
-    //        }
+            if (int.TryParse(input, out int number) && validNumbers.Contains(number))
+            {
+                return number;
+            }
 
-    //        WriteToast("메뉴에 있는 번호를 입력하세요.", ToastType.Warning);
-    //    }
-    //}
+            WriteToast("메뉴에 있는 번호를 입력하세요.", ToastType.Warning);
+        }
+    }
 
     public static string ReadString(string prompt, string defaultValue = "")
     {
