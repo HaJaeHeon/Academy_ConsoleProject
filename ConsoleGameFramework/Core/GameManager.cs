@@ -69,7 +69,7 @@ public class GameManager
             ConsoleUI.Present();
             _currentScene.HandleInput(Context);
         }
-
+        /*
         ConsoleUI.Clear();
         ConsoleUI.WriteTitle("프로그램 종료", "수고하셨습니다.");
         ConsoleUI.WriteBox(new[]
@@ -77,6 +77,9 @@ public class GameManager
             "C# 콘솔 게임 프레임워크가 종료되었습니다.",
             "Core, UI, Scenes 구조를 기준으로 기능을 확장할 수 있습니다."
         }, "Good Bye", ConsoleColor.DarkCyan);
+        */
+
+        DrawClearScreen();
         ConsoleUI.Present();
     }
 
@@ -102,5 +105,34 @@ public class GameManager
     public void RequestQuit()
     {
         Context.IsRunning = false;
+    }
+
+    public void DrawClearScreen()
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+
+        string clearArt = @"
++----------------------------------------------------------+
+|                                                          |
+|                                                          |
+|                                                          |
+|       ___ _  _  __   _  _  _  _   _   _  ___  _  _       |
+|      |_ _| || |/  \ | \| || |/ /  \ \ / // _ \| || |     |
+|       | | | __ | /\ | .' ||   <    \ V /| (_) | \/ |     |
+|       |_| |_||_|_||_|_|\_||_|\_\    |_|  \___/ \__/      |
+|                                                          |
+|      ___  ___  __   ___  _    __   _  _  _  _  _  ___    |
+|     | __|/ _ \/  \ | _ \| |  /  \ \ \/ /| || \| |/ __|   |
+|     | _|| (_) | /\ |  _/| |__| /\ |>  < | || .' | (_ |   |
+|     |_|  \___/|_||_||_| |____|_||_/_/\_\|_||_|\_|\___|   |
+|                                                          |
+|                                                          |
+|               [ PRESS ANY KEY TO Exit ]                  |
+|                                                          |
++----------------------------------------------------------+";
+
+        Console.WriteLine(clearArt);
+
+        Console.ResetColor();
     }
 }

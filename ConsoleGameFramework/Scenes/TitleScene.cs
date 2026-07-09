@@ -17,15 +17,7 @@ public class TitleScene : SceneBase
 
     public override void Render(GameContext context)
     {
-        ConsoleUI.Clear();
-        ConsoleUI.WriteTitle("CONSOLE GAME FRAMEWORK", "C# 콘솔앱 프로젝트 프레임워크");
-
-        ConsoleUI.WriteBox(new[]
-        {
-            " "
-        }, "프로젝트 안내", ConsoleColor.DarkCyan);
-
-
+        DrawTitleScreen();
         ConsoleUI.WriteMenu(Menu, "행동 선택");
     }
 
@@ -44,5 +36,33 @@ public class TitleScene : SceneBase
                 context.Game.RequestQuit();
                 break;
         }
+    }
+    public void DrawTitleScreen()
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+
+        string titleArt = @"
++----------------------------------------------------------+
+|                                                          |
+|  _  __          __        __               _             |
+| | |/ /___ _   _ \ \      / /_ _ _ __ _ __ (_) ___  _ __  |
+| | ' // _ \ | | | \ \ /\ / / _` | '__| '__|| |/ _ \| '__| |
+| | . \  __/ |_| |  \ V  V / (_| | |  | |   | | (_) | |    |
+| |_|\_\___|\__, |   \_/\_/ \__,_|_|  |_|   |_|\___/|_|    |
+|           |___/                                          |
+|                                                          |
+|                                                          |
+|                  />___________________                   |
+| [###############[]___________________/                   |
+|                  \>                                      |
+|                                                          |
+|                                                          |
+|               [ PRESS '1' KEY TO START ]                 |
+|                                                          |
++----------------------------------------------------------+";
+
+        Console.WriteLine(titleArt);
+
+        Console.ResetColor();
     }
 }

@@ -18,12 +18,6 @@ public class StartScene : SceneBase
     public override void Render(GameContext context)
     {
         ConsoleUI.Clear();
-        ConsoleUI.WriteTitle("CONSOLE GAME FRAMEWORK", "C# 콘솔앱 프로젝트 프레임워크");
-
-        ConsoleUI.WriteBox(new[]
-        {
-            " "
-        }, "프로젝트 안내", ConsoleColor.DarkCyan);
 
         ConsoleUI.WriteMenu(Menu, "시작 메뉴");
         ConsoleUI.WriteLog(context.Logs);

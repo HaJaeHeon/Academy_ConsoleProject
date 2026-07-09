@@ -67,7 +67,7 @@ public class BattleManager
         Goblin = new Enemy(EnemyType.Goblin, "고블린", 60, 2, "HP : 60 / DPS 1", 2000, 5);
 		Ghost = new Enemy(EnemyType.Ghost, "유령", 50, 3, "HP : 50 / DPS 3 ", 1000, 15);
 		Hydra = new Enemy(EnemyType.Hydra, "히드라", 100, 6, "HP: 100 / DPS 6 ", 1000, 40);
-		Boss = new Enemy(EnemyType.Boss, "보스", 1000, 10, "HP : 1000 / DPS 20 ", 500, 1000);
+		Boss = new Enemy(EnemyType.Boss, "보스", 300, 10, "HP : 1000 / DPS 20 ", 500, 1000);
 	}
 	public enum BattleOutcome
 	{
