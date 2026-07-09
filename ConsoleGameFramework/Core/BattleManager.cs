@@ -97,15 +97,17 @@ public class BattleManager
             manager.Context.AddLog($"Get Gold : {currentEnemy.Cost} / Current Gold : {setting.PrintGold()} Gold");
             return BattleOutcome.Victory;
         }
-
-		if (Player.IsAlive)
 			return BattleOutcome.Continuing;
+        /*
+		if (Player.IsAlive)
+		
 		else
 			return BattleOutcome.Defeat;
-	}
+		*/
+    }
 
-	//적이 플레이어를 때리는 함수
-	public BattleOutcome EnemyAttack()
+    //적이 플레이어를 때리는 함수
+    public BattleOutcome EnemyAttack()
 	{
 		Player.TakeDamage(currentEnemy.Attack);
 		GameManager manager = GameManager.Instance;
@@ -116,10 +118,12 @@ public class BattleManager
 			manager.Context.AddLog("enemyAttak.PlayerDIe");
 			return BattleOutcome.Defeat;
 		}
-
+		else
+			return BattleOutcome.Continuing;
+		
+		/*
 		if (currentEnemy.IsAlive)
 		{
-            return BattleOutcome.Continuing;
 		}
 		else
 		{
@@ -129,6 +133,7 @@ public class BattleManager
 			manager.Context.AddLog($"Get Gold : {currentEnemy.Cost} / Current Gold : {setting.PrintGold()} Gold");
             return BattleOutcome.Victory;
 		}
+		*/
 	}
 
 	//플레이어가 업적 달성했는지 찍어보는 로그

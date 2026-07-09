@@ -73,8 +73,8 @@ public class BattleScene : SceneBase
     //타이머에 등록된 시간마다 enemyAttack 작동
     private void OnTimedEvent(object sender, ElapsedEventArgs e)
     {
-        this.Render(GameManager.Instance.Context);
         BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
+        this.Render(GameManager.Instance.Context);
         ConsoleUI.Present();
 
         if (outcome != BattleManager.BattleOutcome.Continuing)
@@ -91,7 +91,7 @@ public class BattleScene : SceneBase
         {
             AttackNode.Enqueue(context.Random.Next(1, 4));
         }
-        context.AddLog("큐에 10개 넣기");
+        //context.AddLog("큐에 10개 넣기");
         keyStringValue = AttackNode.Dequeue().ToString();
     }
 
@@ -115,7 +115,9 @@ public class BattleScene : SceneBase
             this.Render(context);
             ConsoleUI.Present();
             BattleManager.BattleOutcome result = BattleManager.Instance.PlayerAttack();
-            BattleResult(context, result);
+
+            if(result != BattleManager.BattleOutcome.Continuing)
+                BattleResult(context, result);
         }        
     }
     //전투 결과 
@@ -125,6 +127,7 @@ public class BattleScene : SceneBase
         {
             StopTimer();
             context.AddLog($"플레이어: {result}");
+            GameManager.Instance.Context.AddLog("아무키나 눌러 Start씬으로 이동...");
             ConsoleUI.Present();
             context.Game.ChangeScene(SceneKey.Start);
         }
@@ -132,6 +135,7 @@ public class BattleScene : SceneBase
         {
             StopTimer();
             context.AddLog($"플레이어. {result}");
+            GameManager.Instance.Context.AddLog("아무키나 눌러 Start씬으로 이동...");
             ConsoleUI.Present();
             context.Game.ChangeScene(SceneKey.Start);
         }
