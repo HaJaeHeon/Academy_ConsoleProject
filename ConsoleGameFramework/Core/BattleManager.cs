@@ -19,8 +19,35 @@ public class BattleManager
 			return instance;
 		}
 	}
-	public int attackCount = 0;
+	InventoryManager iManager = InventoryManager.Instance;
+	public  Action OnSwordEffect;
+	public  Action OnShieldEffect;
+	private int attackCount;
+	public int AttackCount
+	{
+		get => attackCount;
+		set
+		{
+			attackCount = value;
 
+            if (attackCount > 0 && attackCount % 3 == 0)
+            {
+				if (iManager.VerifyEquip(1))
+				{
+					OnSwordEffect?.Invoke();
+				}
+				//GameManager.Instance.Context.AddLog("검없음");
+            }
+			if (attackCount > 0 && attackCount % 5 == 0)
+			{
+				if (iManager.VerifyEquip(2))
+				{
+					OnShieldEffect?.Invoke();
+				}
+				//GameManager.Instance.Context.AddLog("방패없음");
+			}
+        }
+	}
 	// 플레이어
 	public Player Player { get; set; }
 
@@ -54,8 +81,10 @@ public class BattleManager
 	//플레이어가 hp를 60 이상 남기고 클리어(승리) 했을 시 업적을 추가함
 	public BattleOutcome PlayerAttack()
 	{
-        currentEnemy.TakeDamage(Player.Attack);
 		GameManager manager = GameManager.Instance;
+		manager.Context.AddLog($"{AttackCount}");
+		
+        currentEnemy.TakeDamage(Player.Attack);
 		manager.Context.AddLog($"{Player.Name}(이)가 {currentEnemy.Name}(을)를 공격했습니다. 데미지 : {Player.Attack}");
 
 		if (!currentEnemy.IsAlive)

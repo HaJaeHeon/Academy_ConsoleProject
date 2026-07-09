@@ -62,7 +62,7 @@ public class SelectEnemyScene : SceneBase
                 GoTo(context, SceneKey.Battle);
                 break;
             case 9:
-                GoTo(context, SceneKey.Title);
+                GoTo(context, SceneKey.Start);
                 break;
 
             case 0:

@@ -13,7 +13,7 @@ public class BattleScene : SceneBase
 
     public System.Timers.Timer enemyAttackTimer;
 
-    int attackCount = 0;
+    //int attackCount = 0;
 
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
@@ -28,10 +28,23 @@ public class BattleScene : SceneBase
 
     public override void Enter(GameContext context)
     {
+        BattleManager.Instance.AttackCount = 0;
         BattleManager.Instance.Player.Hp = BattleManager.Instance.Player.MaxHp;
         BattleManager.Instance.currentEnemy.Hp = BattleManager.Instance.currentEnemy.MaxHp;
         MakeNodes(context);
-        attackCount = 0;
+        BattleManager bManager = BattleManager.Instance;
+        bManager.OnShieldEffect = null;
+        bManager.OnSwordEffect = null;
+        bManager.OnSwordEffect += () =>
+        {
+            bManager.currentEnemy.TakeDamage(bManager.Player.Attack);
+            GameManager.Instance.Context.AddLog($"추가 타격! / 데미지 : {bManager.Player.Attack}");
+        };
+        bManager.OnShieldEffect += () =>
+        {
+            bManager.Player.Hp += 10;
+            GameManager.Instance.Context.AddLog($"체력 회복! / 회복량 : {bManager.Player.Attack}");
+        };
     }
     public override void Render(GameContext context)
     {
@@ -42,6 +55,7 @@ public class BattleScene : SceneBase
         ConsoleUI.WriteCentered($"커맨드 : {keyStringValue}", ConsoleColor.Yellow);
         ConsoleUI.WriteStatusBar(BattleManager.Instance.Player.Name, BattleManager.Instance.Player.Hp, BattleManager.Instance.Player.MaxHp); // 플레이어의 이름과 HP를 가져와야한다.
         ConsoleUI.WriteStatusBar(BattleManager.Instance.currentEnemy.Name, BattleManager.Instance.currentEnemy.Hp, BattleManager.Instance.currentEnemy.MaxHp, fillColor: ConsoleColor.Red); // 적의 이름과 HP를 가져와야한다.
+        ConsoleUI.WriteSubtitle($"어택 카운트 : {BattleManager.Instance.AttackCount}");
         ConsoleUI.WriteMenu(Menu, "행동 메뉴");
         ConsoleUI.WriteLog(context.Logs);
     }
@@ -101,7 +115,7 @@ public class BattleScene : SceneBase
         }
         else if (choice.ToString() == keyStringValue)
         {
-            BattleManager.Instance.attackCount++;
+            BattleManager.Instance.AttackCount++;
             if (AttackNode.Count <= 2)
                 MakeNodes(context);
             keyStringValue = AttackNode.Dequeue().ToString();
@@ -118,12 +132,14 @@ public class BattleScene : SceneBase
         {
             StopTimer();
             context.AddLog($"플레이어: {result}");
+            ConsoleUI.Present();
             context.Game.ChangeScene(SceneKey.Start);
         }
         else if (result == BattleManager.BattleOutcome.Defeat)
         {
             StopTimer();
             context.AddLog($"플레이어. {result}");
+            ConsoleUI.Present();
             context.Game.ChangeScene(SceneKey.Start);
         }
     }

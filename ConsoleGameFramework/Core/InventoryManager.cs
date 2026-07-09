@@ -70,6 +70,11 @@ public class InventoryManager
         bool result = InventoryList.Contains((ItemType)num);
         return result;
     }
+    public bool VerifyEquip(int num)
+    {
+        bool result = EquipList.Contains((ItemType)num);
+        return result;
+    }
 
     public void Equip(int index)
     {
