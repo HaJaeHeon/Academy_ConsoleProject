@@ -29,6 +29,7 @@ public class BattleScene : SceneBase
     public override void Enter(GameContext context)
     {
         BattleManager.Instance.Player.Hp = BattleManager.Instance.Player.MaxHp;
+        BattleManager.Instance.currentEnemy.Hp = BattleManager.Instance.currentEnemy.MaxHp;
         MakeNodes(context);
         attackCount = 0;
     }

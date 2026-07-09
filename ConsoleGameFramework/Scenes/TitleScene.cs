@@ -26,9 +26,6 @@ public class TitleScene : SceneBase
         }, "프로젝트 안내", ConsoleColor.DarkCyan);
 
 
-        name = ConsoleUI.ReadString("플레이어 이름을 입력하세요");
-        BattleManager.Instance.StartBattleInit(name);
-
         ConsoleUI.WriteMenu(Menu, "행동 선택");
         //GoTo(context, SceneKey.Start);
     }
@@ -57,6 +54,8 @@ public class TitleScene : SceneBase
             //    break;
 
             case 1:
+                name = ConsoleUI.ReadString("플레이어 이름을 입력하세요");
+                BattleManager.Instance.StartBattleInit(name);
                 GoTo(context, SceneKey.Start);
                 break;
 

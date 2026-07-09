@@ -8,8 +8,8 @@ namespace ConsoleGameFramework_KR.Scenes
     {
         private static readonly List<MenuOption> Menu = new List<MenuOption>
         {
-        new MenuOption(1, "검 (10 G)","검 - 3연속으로 커맨드를 정확히 입력하면 크리티컬 대미지를 입힙니다."),
-        new MenuOption(2, "방패 (30 G)", "방패 - 5연속으로 커맨드를 정확히 입력하면  HP를 회복합니다."),
+        new MenuOption(1, "검 (10 G)","검 - 고블린업적 필요 - 3연속으로 커맨드를 정확히 입력하면 크리티컬 대미지를 입힙니다."),
+        new MenuOption(2, "방패 (30 G)", "방패 - 유령 업적 필요 - 5연속으로 커맨드를 정확히 입력하면  HP를 회복합니다."),
         new MenuOption(3, "공격력의 비약 (50 G)", "공격력의 비약 - 플레이어의 기본 공격력을 3 증가시킵니다."),
         new MenuOption(4, "체력의 비약 (50 G)", "체력의 비약 - 플레이어의 최대 체력을 20 증가시킵니다."),
         new MenuOption(9, "시작 화면으로 ", "첫 화면으로 돌아갑니다."),
@@ -107,10 +107,15 @@ namespace ConsoleGameFramework_KR.Scenes
                 gManager.Context.AddLog($"2인벤토리가 가득 찼습니다.");
                 return false;
             }
+            if(CheckAchievement(num) == false)
+            {
+                gManager.Context.AddLog($"*업적을 확인하세요*");
+                return false;
+            }
 
             int index = Menu.FindIndex(option => option.Number == num);
 
-            GameManager.Instance.Context.AddLog($"{num}");
+            //GameManager.Instance.Context.AddLog($"{num}");
             iManager.itemPrice.TryGetValue((InventoryManager.ItemType)num, out int price);
             if (price > settingManager.PrintGold())
             {
@@ -125,6 +130,22 @@ namespace ConsoleGameFramework_KR.Scenes
                 return true;
             }
             return false;
+        }
+
+        public bool CheckAchievement(int num)
+        {
+            if (num == 1)
+            {
+                bool isAchieve = GameSettingManager.Instance.achievementsGoblin;
+                return isAchieve;
+            }
+            else if (num == 2)
+            {
+                bool isAchieve = GameSettingManager.Instance.achievementsGhost;
+                return isAchieve;
+            }
+            else
+                return true;
         }
     }
 }
