@@ -53,6 +53,11 @@ public class SelectEnemyScene : SceneBase
                 GoTo(context, SceneKey.Battle);
                 break;
             case 4:
+                if(!CheckEnemyAchievement())
+                {
+                    GameManager.Instance.Context.AddLog($"*입장 실패 / 업적을 확인하세요*");
+                    return;
+                }
                 BattleManager.Instance.currentEnemy = BattleManager.Instance.Boss;
                 GoTo(context, SceneKey.Battle);
                 break;
@@ -64,5 +69,11 @@ public class SelectEnemyScene : SceneBase
                 context.Game.RequestQuit();
                 break;
         }
+    }
+
+    public bool CheckEnemyAchievement()
+    { 
+            bool isAchieve = GameSettingManager.Instance.achievementsGoblin && GameSettingManager.Instance.achievementsGhost && GameSettingManager.Instance.achievementsHydra;
+            return isAchieve;
     }
 }

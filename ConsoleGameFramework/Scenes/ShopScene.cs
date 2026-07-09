@@ -107,9 +107,9 @@ namespace ConsoleGameFramework_KR.Scenes
                 gManager.Context.AddLog($"2인벤토리가 가득 찼습니다.");
                 return false;
             }
-            if(CheckAchievement(num) == false)
+            if(CheckShopAchievement(num) == false)
             {
-                gManager.Context.AddLog($"*업적을 확인하세요*");
+                gManager.Context.AddLog($"*구매 실패 / 업적을 확인하세요 *");
                 return false;
             }
 
@@ -132,7 +132,7 @@ namespace ConsoleGameFramework_KR.Scenes
             return false;
         }
 
-        public bool CheckAchievement(int num)
+        public bool CheckShopAchievement(int num)
         {
             if (num == 1)
             {
