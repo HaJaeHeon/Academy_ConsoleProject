@@ -126,8 +126,13 @@ public class BattleScene : SceneBase
         if (result == BattleManager.BattleOutcome.Victory)
         {
             StopTimer();
+            if(BattleManager.Instance.CheckBoss())
+            {
+                context.Game.RequestQuit();
+            }
             context.AddLog($"플레이어: {result}");
-            GameManager.Instance.Context.AddLog("아무키나 눌러 Start씬으로 이동...");
+            //GameManager.Instance.Context.AddLog("아무키나 눌러 Start씬으로 이동...");
+
             ConsoleUI.Present();
             context.Game.ChangeScene(SceneKey.Start);
         }

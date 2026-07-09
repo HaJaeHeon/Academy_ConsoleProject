@@ -155,5 +155,11 @@ public class BattleManager
 		Player.MaxHp += 20;
 		Player.Hp = Player.MaxHp;
 	}
+	public bool CheckBoss()
+	{
+		if (currentEnemy.Type == EnemyType.Boss)
+		{ return true; }
+		return false;
+	}
 }
 
