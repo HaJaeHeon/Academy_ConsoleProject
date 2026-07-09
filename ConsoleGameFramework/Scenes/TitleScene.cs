@@ -17,7 +17,7 @@ public class TitleScene : SceneBase
         new MenuOption(2, "적 선택 화면으로 이동", "적을 선택해서 전투를 시작합니다."),
         //new MenuOption(3, "지도 화면으로 이동", "플레이어가 월드맵으로 이동합니다."),
         //new MenuOption(2, "전투 화면으로 이동", "플레이어와 적의 전투가 시작됩니다."),
-        //new MenuOption(1, "샘플 화면으로 이동", "ConsoleUI의 다른 기능들을 보여주는 화면으로 이동합니다."),
+        new MenuOption(1, "샘플 화면으로 이동", "ConsoleUI의 다른 기능들을 보여주는 화면으로 이동합니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
 
@@ -63,9 +63,9 @@ public class TitleScene : SceneBase
             //    GoTo(context, SceneKey.Battle);
             //    break;
 
-            //case 1:
-            //    GoTo(context, SceneKey.Sample);
-            //    break;
+            case 1:
+                GoTo(context, SceneKey.Sample);
+                break;
 
             case 0:
                 context.Game.RequestQuit();

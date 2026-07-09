@@ -124,7 +124,7 @@ public static class ConsoleUI
         }
 
         int width = SafeWidth;
-        int lineCount = _frameLines.Count-1;
+        int lineCount = _frameLines.Count;
         int occupiedLineCount = Math.Max(_lastPresentedLineCount, GetCursorTopOrZero() + 1);
         int linesToClear = Math.Max(0, occupiedLineCount - lineCount);
 
@@ -146,8 +146,19 @@ public static class ConsoleUI
 
         for (int i = 0; i < lineCount; i++)
         {
-            WriteLineToConsole(_frameLines[i], width);
+            try
+            {
+                WriteLineToConsole(_frameLines[i], width);
+            }
+            catch (Exception ex)
+            {
+                // ex.Message가 "Index out of range"면 -> 멀티스레드 충돌 문제 (Lock 필요)
+                // ex.Message가 "The value must be greater than zero..."면 -> width나 콘솔 창 크기 문제
+            }
         }
+    
+
+
 
         // 이전 프레임보다 현재 프레임이 짧으면 아래쪽에 남은 글자를 공백으로 덮어씁니다.
         for (int i = 0; i < linesToClear; i++)

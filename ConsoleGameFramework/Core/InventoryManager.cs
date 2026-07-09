@@ -49,6 +49,8 @@ public class InventoryManager
     public static int maxInventorySize = 7;
     public List<ItemType> EquipList = new List<ItemType>(maxEquipSize);
     public List<ItemType> InventoryList = new List<ItemType>(maxInventorySize);
+    public List<string> stringInventoryList = new List<string>();
+    public List<IReadOnlyList<string>> readOnlyInventoryList = new List<IReadOnlyList<string>>();
 
     public void Equip(int index)
     {
@@ -63,28 +65,40 @@ public class InventoryManager
             GameManager.Instance.Context.AddLog("3인벤토리가 가득찼습니다.");
             return;
         }
-        InventoryList.Add((ItemType)index+1);
+        InventoryList.Add((ItemType)index);
+        stringInventoryList.Add(((ItemType)index).ToString());
     }
 
-    //public void PrintInventory()
-    //{
-    //    string boxString = "";
-        
-
-    //    foreach (Item item in InventoryList)
-    //    {
-    //        boxString += $"{item}\n";
-    //        //ConsoleUI.Write($"{item}");
-    //        //GameManager.Instance.Context.AddLog($">> {item} <<");
-    //    }
-    //    ConsoleUI.WriteBox(new[]
-    //    {
-    //        $"",
-    //        $"{boxString}"
-    //    }, "", ConsoleColor.DarkCyan);
-    //}
+    public void PrintInventory()
+    {
+        readOnlyInventoryList.Clear();
+        foreach (var item in stringInventoryList)
+        {
+            readOnlyInventoryList.Add(new[] { item });
+        }
+        foreach (var list in InventoryList)
+        {
+            GameManager.Instance.Context.AddLog($"{list}");
+        }
+        ConsoleUI.WriteTable(
+            headers: new[] { "아이템" },
+            rows: readOnlyInventoryList
+        );
+    }
     public void PrintEquip()
     {
-        
+        readOnlyInventoryList.Clear();
+        foreach (var item in stringInventoryList)
+        {
+            readOnlyInventoryList.Add(new[] { item });
+        }
+        foreach (var list in InventoryList)
+        {
+            GameManager.Instance.Context.AddLog($"{list}");
+        }
+        ConsoleUI.WriteTable(
+            headers: new[] { "아이템" },
+            rows: readOnlyInventoryList
+        );
     }
 }

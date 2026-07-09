@@ -42,7 +42,7 @@ public class BattleManager
         Goblin = new Enemy(EnemyType.Goblin, "고블린", 40, 1, "DPS 1", 1000, 5);
 		Ghost = new Enemy(EnemyType.Ghost, "유령", 20, 2, "DPS 4 ", 500, 15);
 		Hydra = new Enemy(EnemyType.Hydra, "히드라", 60, 2, "DPS 8 ", 250, 40);
-		Boss = new Enemy(EnemyType.Boss, "보스", 100, 4, "DPS 16 ", 250, 1000);
+		Boss = new Enemy(EnemyType.Boss, "보스", 100, 8, "DPS 16 ", 500, 1000);
 	}
 	public enum BattleOutcome
 	{
@@ -62,9 +62,8 @@ public class BattleManager
 		{
 			if (Player.Hp  > 60)
 			{
-				//PrintAchievementLog(manager);
 				GameSettingManager.Instance.UnlockAchievement(currentEnemy);
-				PrintAchievementLog(manager);
+				//PrintAchievementLog(manager);
             }
             GameSettingManager setting = GameSettingManager.Instance;
             setting.ChangeGold(currentEnemy.Cost);
@@ -93,7 +92,6 @@ public class BattleManager
 
 		if (currentEnemy.IsAlive)
 		{
-			//manager.Context.AddLog("enemyAttack,Continue");
             return BattleOutcome.Continuing;
 		}
 		else

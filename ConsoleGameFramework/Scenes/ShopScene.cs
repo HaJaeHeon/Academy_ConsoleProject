@@ -123,6 +123,5 @@ namespace ConsoleGameFramework_KR.Scenes
             }
             return false;
         }
-
     }
 }
