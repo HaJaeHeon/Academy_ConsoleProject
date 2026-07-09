@@ -79,6 +79,12 @@ public class InventoryManager
         stringInventoryList.Remove(((ItemType)index).ToString());
     }
 
+    public void Use(int index)
+    {
+        InventoryList.Remove((ItemType)index);
+        stringInventoryList.Remove(((ItemType)index).ToString());
+    }
+
     public void PrintInventory()
     {
         readOnlyInventoryList.Clear();
