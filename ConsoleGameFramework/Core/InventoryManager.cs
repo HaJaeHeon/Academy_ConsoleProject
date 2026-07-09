@@ -48,23 +48,23 @@ public class InventoryManager
         InventoryList.Add((Item)index+1);
     }
 
-    public void PrintInventory()
-    {
-        string boxString = "";
+    //public void PrintInventory()
+    //{
+    //    string boxString = "";
         
 
-        foreach (Item item in InventoryList)
-        {
-            boxString += $"{item}\n";
-            //ConsoleUI.Write($"{item}");
-            //GameManager.Instance.Context.AddLog($">> {item} <<");
-        }
-        ConsoleUI.WriteBox(new[]
-        {
-            $"",
-            $"{boxString}"
-        }, "", ConsoleColor.DarkCyan);
-    }
+    //    foreach (Item item in InventoryList)
+    //    {
+    //        boxString += $"{item}\n";
+    //        //ConsoleUI.Write($"{item}");
+    //        //GameManager.Instance.Context.AddLog($">> {item} <<");
+    //    }
+    //    ConsoleUI.WriteBox(new[]
+    //    {
+    //        $"",
+    //        $"{boxString}"
+    //    }, "", ConsoleColor.DarkCyan);
+    //}
     public void PrintEquip()
     {
         

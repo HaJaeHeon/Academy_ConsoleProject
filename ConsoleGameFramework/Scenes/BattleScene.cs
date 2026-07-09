@@ -55,8 +55,8 @@ public class BattleScene : SceneBase
     //타이머에 등록된 시간마다 enemyAttack 작동
     private void OnTimedEvent(object sender, ElapsedEventArgs e)
     {
-        BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
         this.Render(GameManager.Instance.Context);
+        BattleManager.BattleOutcome outcome = BattleManager.Instance.EnemyAttack();
         ConsoleUI.Present();
 
         if (outcome != BattleManager.BattleOutcome.Continuing)
@@ -80,27 +80,28 @@ public class BattleScene : SceneBase
 
     public override void HandleInput(GameContext context)
     {
-        //this.Render(context);
+        this.Render(context);
         //consolekey를 이용해서 키 값을 받아옴
-        int choice = ConsoleUI.ReadMenuWithConsoleKey(Menu);
-
-        if (choice == 0)
+        int choice = ConsoleUI.ReadMenuChoice(Menu);
+        if(choice == 9)
+        {
+            context.Game.ChangeScene(SceneKey.Title);
+        }
+        else if (choice == 0)
         {
             StopTimer();
-            context.Game.ChangeScene(SceneKey.Title);
+            context.Game.RequestQuit();
         }
         else if (choice.ToString() == keyStringValue)
         {
-            // context.AddLog(choice.ToString());
+            //context.AddLog(choice.ToString());
             keyStringValue = AttackNode.Dequeue().ToString();
             //context.AddLog($"peek 값 : {AttackNode.Peek().ToString()}, 큐에 남은 갯수 : {AttackNode.Count} ");
+            this.Render(context);
+            ConsoleUI.Present();
             BattleManager.BattleOutcome result = BattleManager.Instance.PlayerAttack();
             BattleResult(context, result);
-        }
-        else
-        {
-            context.AddLog("잘못된 공격");
-        }
+        }        
     }
 
     public void BattleResult(GameContext context, BattleManager.BattleOutcome result)

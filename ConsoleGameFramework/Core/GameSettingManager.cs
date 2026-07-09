@@ -54,4 +54,9 @@ public class GameSettingManager
     {
         gold += amount;
     }
+
+    public int PrintGold()
+    {
+        return gold;
+    }
 }

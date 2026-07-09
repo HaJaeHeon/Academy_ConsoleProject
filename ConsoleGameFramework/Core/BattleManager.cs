@@ -36,10 +36,10 @@ public class BattleManager
 		Player = new Player(name, 100, 10, Equipment.None);
 
 		if(currentEnemy == null)
-			currentEnemy = new Enemy(EnemyType.None, "???", 100, 30, "DPS 60", 500);
-        Goblin = new Enemy(EnemyType.Goblin, "고블린", 40, 1, "DPS 1", 1000);
-		Ghost = new Enemy(EnemyType.Ghost, "유령", 20, 2, "DPS 4 ", 500);
-		Hydra = new Enemy(EnemyType.Hydra, "히드라", 60, 2, "DPS 8 ", 250);
+			currentEnemy = new Enemy(EnemyType.None, "???", 100, 30, "DPS 60", 500, 100);
+        Goblin = new Enemy(EnemyType.Goblin, "고블린", 40, 1, "DPS 1", 1000, 5);
+		Ghost = new Enemy(EnemyType.Ghost, "유령", 20, 2, "DPS 4 ", 500, 15);
+		Hydra = new Enemy(EnemyType.Hydra, "히드라", 60, 2, "DPS 8 ", 250, 40);
 	}
 	public enum BattleOutcome
 	{
@@ -87,12 +87,15 @@ public class BattleManager
 
 		if (currentEnemy.IsAlive)
 		{
-			manager.Context.AddLog("enemyAttack,Continue");
+			//manager.Context.AddLog("enemyAttack,Continue");
             return BattleOutcome.Continuing;
 		}
 		else
 		{
 			manager.Context.AddLog("EnemyDIe");
+			GameSettingManager setting = GameSettingManager.Instance;
+			setting.ChangeGold(currentEnemy.Cost);
+			GameManager.Instance.Context.AddLog(setting.PrintGold().ToString());
             return BattleOutcome.Victory;
 		}
 	}

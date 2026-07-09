@@ -33,7 +33,7 @@ namespace ConsoleGameFramework_KR.Scenes
         {
             ConsoleUI.Clear();
             ConsoleUI.WriteTitle("Inventory 화면", "장비할 아이템들을 선택해주세요");
-            iManager.PrintInventory();
+            //iManager.PrintInventory();
             ConsoleUI.WriteMenu(Menu, "행동 선택");
             ConsoleUI.WriteLog(context.Logs);
         }
@@ -52,13 +52,13 @@ namespace ConsoleGameFramework_KR.Scenes
             switch (choice)
             {
                 case 1:
-                    iManager.PrintInventory();
+                    //iManager.PrintInventory();
                     break;
                 case 2:
                     iManager.PrintEquip();
                     break;
                 case 3:
-                    this.Render();
+                    context.Game.ChangeScene(SceneKey.Equip);
                     break;
                 case 9:
                     GoTo(context, SceneKey.Title);

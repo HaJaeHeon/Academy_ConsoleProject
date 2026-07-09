@@ -12,11 +12,11 @@ public class TitleScene : SceneBase
 {
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
-        new MenuOption(6, "인벤토리 화면으로 이동", "현재 인벤토리 내의 아이템 목록들을 출력하고 아이템을 선택해서 장비합니다."),
-        new MenuOption(5, "상점 화면으로 이동", "상점을 방문해서 여러 장비아이템을 구매합니다."),
-        new MenuOption(4, "적 선택 화면으로 이동", "적을 선택해서 전투를 시작합니다."),
+        new MenuOption(4, "인벤토리 화면으로 이동", "현재 인벤토리 내의 아이템 목록들을 출력하고 아이템을 선택해서 장비합니다."),
+        new MenuOption(3, "상점 화면으로 이동", "상점을 방문해서 여러 장비아이템을 구매합니다."),
+        new MenuOption(2, "적 선택 화면으로 이동", "적을 선택해서 전투를 시작합니다."),
         //new MenuOption(3, "지도 화면으로 이동", "플레이어가 월드맵으로 이동합니다."),
-        new MenuOption(2, "전투 화면으로 이동", "플레이어와 적의 전투가 시작됩니다."),
+        //new MenuOption(2, "전투 화면으로 이동", "플레이어와 적의 전투가 시작됩니다."),
         new MenuOption(1, "샘플 화면으로 이동", "ConsoleUI의 다른 기능들을 보여주는 화면으로 이동합니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
@@ -42,25 +42,25 @@ public class TitleScene : SceneBase
         string name = "";
         switch (choice)
         {
-            case 6:
+            case 4:
                 GoTo(context, SceneKey.Inventory);
                 break;
-            case 5:
+            case 3:
                 GoTo(context, SceneKey.Shop);
                 break;
-            case 4:
-                name = ConsoleUI.ReadString("이름을 입력하세요");
+            case 2:
+                name = ConsoleUI.ReadString("플레이어 이름을 입력하세요");
                 BattleManager.Instance.StartBattleInit(name);
                 GoTo(context, SceneKey.SelectEnemy);
                 break;
             //case 3:
             //    GoTo(context, SceneKey.Map);
             //    break;
-            case 2:
-                name = ConsoleUI.ReadString("이름을 입력하세요");
-                BattleManager.Instance.StartBattleInit(name);
-                GoTo(context, SceneKey.Battle);
-                break;
+            //case 2:
+            //    name = ConsoleUI.ReadString("이름을 입력하세요");
+            //    BattleManager.Instance.StartBattleInit(name);
+            //    GoTo(context, SceneKey.Battle);
+            //    break;
 
             case 1:
                 GoTo(context, SceneKey.Sample);
