@@ -116,7 +116,7 @@ namespace ConsoleGameFramework_KR.Scenes
             }
             else if (price <= settingManager.PrintGold())
             {
-                iManager.PurchaseItem(num);
+                iManager.AddItem(num);
                 settingManager.ChangeGold(price * -1);
                 gManager.Context.AddLog($"{Menu[index].Label}을 구매했습니다. / 현재 {settingManager.PrintGold()} G 보유중입니다.");
                 return true;

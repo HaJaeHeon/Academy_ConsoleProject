@@ -56,7 +56,7 @@ public class InventoryManager
         InventoryList.RemoveAt(index);
     }
 
-    public void PurchaseItem(int index)
+    public void AddItem(int index)
     {
         if (InventoryList.Count >= maxInventorySize)
         {
