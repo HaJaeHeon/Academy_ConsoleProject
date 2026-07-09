@@ -22,7 +22,7 @@ public class BattleManager
 	public int attackCount = 0;
 
 	// 플레이어
-	public Player Player { get; private set; }
+	public Player Player { get; set; }
 
 	// 적
 	public Enemy Goblin { get; private set; }
@@ -111,5 +111,16 @@ public class BattleManager
         manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsGhost}");
         manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsHydra}");
     }
+
+	public void GetPower()
+	{
+		Player.Attack++;
+	}
+
+	public void GetHealth()
+	{
+		Player.MaxHp += 10;
+		Player.Hp = Player.MaxHp;
+	}
 }
 

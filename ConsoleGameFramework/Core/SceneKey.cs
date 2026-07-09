@@ -17,5 +17,6 @@ public enum SceneKey
     Shop,
     Inventory,
     Equip,
-    Usage
+    Usage,
+    Start
 }

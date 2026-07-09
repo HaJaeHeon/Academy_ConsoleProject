@@ -12,7 +12,7 @@ namespace ConsoleGameFramework_KR.Scenes
         new MenuOption(2, "방패 (30 G)", "방패 - 5연속으로 커맨드를 정확히 입력하면  HP를 회복합니다."),
         new MenuOption(3, "공격력의 비약 (50 G)", "공격력의 비약 - 플레이어의 기본 공격력을 1 증가시킵니다."),
         new MenuOption(4, "체력의 비약 (50 G)", "체력의 비약 - 플레이어의 최대 체력을 10 증가시킵니다."),
-        new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
+        new MenuOption(9, "시작 화면으로 ", "첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
         };
         public override SceneKey Key => SceneKey.Shop;
@@ -71,7 +71,7 @@ namespace ConsoleGameFramework_KR.Scenes
                     }
                     break;
                 case 9:
-                    GoTo(context, SceneKey.Title);
+                    GoTo(context, SceneKey.Start);
                     break;
 
                 case 0:

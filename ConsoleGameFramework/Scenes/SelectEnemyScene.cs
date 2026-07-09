@@ -12,7 +12,7 @@ public class SelectEnemyScene : SceneBase
         new MenuOption(3, "히드라", "히드라를 상대합니다 / DPS 4"),
         new MenuOption(4
             , "보스", "히드라를 상대합니다 / DPS 16"),
-        new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
+        new MenuOption(9, "시작 화면으로 ", "첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
 

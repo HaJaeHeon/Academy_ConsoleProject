@@ -14,13 +14,13 @@ namespace ConsoleGameFramework_KR.Scenes
         new MenuOption(2, "장비 확인",""),
         new MenuOption(3, "장비 아이템 착용",""),
         new MenuOption(4, "소비 아이템 사용",""),
-        new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
+        new MenuOption(9, "시작 화면으로", "첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
         }; 
 
         private static List<MenuOption> InventoryMenu = new List<MenuOption>
         { 
-        new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
+        new MenuOption(9, "시작 화면으로", "첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
         };
 
@@ -68,7 +68,7 @@ namespace ConsoleGameFramework_KR.Scenes
                     context.Game.ChangeScene(SceneKey.Usage);
                     break;
                 case 9:
-                    GoTo(context, SceneKey.Title);
+                    GoTo(context, SceneKey.Start);
                     break;
                 case 0:
                     context.Game.RequestQuit();

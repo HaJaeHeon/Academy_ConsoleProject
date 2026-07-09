@@ -40,6 +40,8 @@ public class UsageScene : SceneBase
                 if (imanager.VerifyItem(choice + posionNum))
                 {
                     imanager.Use(choice + posionNum);
+                    BattleManager.Instance.GetPower();
+                    GameManager.Instance.Context.AddLog($"{BattleManager.Instance.Player.Attack}");
                     GameManager.Instance.Context.AddLog("공격력의 비약을 사용했습니다.");
                 }
                 else
@@ -51,6 +53,8 @@ public class UsageScene : SceneBase
                 if (imanager.VerifyItem(choice + posionNum))
                 {
                     imanager.Use(choice + posionNum);
+                    BattleManager.Instance.GetHealth();
+                    GameManager.Instance.Context.AddLog($"{BattleManager.Instance.Player.MaxHp}");
                     GameManager.Instance.Context.AddLog("체력의 비약을 사용했습니다.");
                 }
                 else

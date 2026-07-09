@@ -24,7 +24,7 @@ public class GameSettingManager
     public bool achievementsGhost { get; private set; } = false;
     public bool achievementsHydra { get; private set; } = false;
 
-    public int gold { get; private set; } = 0;
+    public int gold { get; private set; } = 10000;
 
     public void UnlockAchievement(Enemy enemy)
     {
