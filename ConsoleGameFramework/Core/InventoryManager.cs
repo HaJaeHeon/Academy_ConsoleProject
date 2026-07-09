@@ -6,20 +6,33 @@ using ConsoleGameFramework.UI;
 
 public class InventoryManager
 {
-    public enum Item
+    public enum ItemType
     {
         Sword = 1,
         Shield = 2,
         PowerPosion = 3,
         HealthPosion = 4
     }
+    //public class ItemInfo
+    //{
+    //    public ItemType Type;
+    //    public int Price;
+
+    //    public ItemInfo(ItemType type, int price)
+    //    {
+    //        Type = type;
+    //        Price = price;
+    //    }
+    //}
+    public Dictionary<ItemType, int> itemPrice = new Dictionary<ItemType, int>()
+    {
+        {ItemType.Sword, 10 },
+        {ItemType.Shield, 30 },
+        {ItemType.PowerPosion, 50 },
+        {ItemType.HealthPosion, 50 }
+    };
 
     private static InventoryManager instance = null;
-
-    public static int maxEquipSize = 2;
-    public static int maxInventorySize = 10;
-    public List<Item> EquipList = new List<Item>(maxEquipSize);
-    public List<Item> InventoryList = new List<Item>(maxInventorySize);
 
     public static InventoryManager Instance
     {
@@ -31,6 +44,11 @@ public class InventoryManager
             return instance;
         }
     }
+
+    public static int maxEquipSize = 2;
+    public static int maxInventorySize = 7;
+    public List<ItemType> EquipList = new List<ItemType>(maxEquipSize);
+    public List<ItemType> InventoryList = new List<ItemType>(maxInventorySize);
 
     public void Equip(int index)
     {
@@ -45,7 +63,7 @@ public class InventoryManager
             GameManager.Instance.Context.AddLog("3인벤토리가 가득찼습니다.");
             return;
         }
-        InventoryList.Add((Item)index+1);
+        InventoryList.Add((ItemType)index+1);
     }
 
     //public void PrintInventory()

@@ -19,6 +19,7 @@ public class BattleManager
 			return instance;
 		}
 	}
+	public int attackCount = 0;
 
 	// 플레이어
 	public Player Player { get; private set; }
@@ -27,6 +28,7 @@ public class BattleManager
 	public Enemy Goblin { get; private set; }
 	public Enemy Ghost { get; private set; }
 	public Enemy Hydra { get; private set; }
+	public Enemy Boss { get; private set; }
 
 	public Enemy currentEnemy { get; set; }
 
@@ -40,6 +42,7 @@ public class BattleManager
         Goblin = new Enemy(EnemyType.Goblin, "고블린", 40, 1, "DPS 1", 1000, 5);
 		Ghost = new Enemy(EnemyType.Ghost, "유령", 20, 2, "DPS 4 ", 500, 15);
 		Hydra = new Enemy(EnemyType.Hydra, "히드라", 60, 2, "DPS 8 ", 250, 40);
+		Boss = new Enemy(EnemyType.Boss, "보스", 100, 4, "DPS 16 ", 250, 1000);
 	}
 	public enum BattleOutcome
 	{

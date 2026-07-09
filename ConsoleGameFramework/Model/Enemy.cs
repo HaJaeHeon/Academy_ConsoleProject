@@ -7,6 +7,7 @@ public enum EnemyType
 	Goblin,
 	Ghost,
 	Hydra,
+	Boss,
 	None
 }
 

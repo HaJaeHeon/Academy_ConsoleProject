@@ -10,6 +10,8 @@ public class SelectEnemyScene : SceneBase
         new MenuOption(1, "고블린", "고블린을 상대합니다 / DPS 1"),
         new MenuOption(2, "유령", "유령을 상대합니다 / DPS 2"),
         new MenuOption(3, "히드라", "히드라를 상대합니다 / DPS 4"),
+        new MenuOption(4
+            , "보스", "히드라를 상대합니다 / DPS 16"),
         new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
@@ -48,6 +50,10 @@ public class SelectEnemyScene : SceneBase
                 break;
             case 3:
                 BattleManager.Instance.currentEnemy = BattleManager.Instance.Hydra;
+                GoTo(context, SceneKey.Battle);
+                break;
+            case 4:
+                BattleManager.Instance.currentEnemy = BattleManager.Instance.Boss;
                 GoTo(context, SceneKey.Battle);
                 break;
             case 9:

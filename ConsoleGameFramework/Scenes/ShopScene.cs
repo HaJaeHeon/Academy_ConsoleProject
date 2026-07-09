@@ -1,4 +1,5 @@
-﻿using ConsoleGameFramework.Core;
+﻿using System.Diagnostics;
+using ConsoleGameFramework.Core;
 using ConsoleGameFramework.UI;
 
 namespace ConsoleGameFramework_KR.Scenes
@@ -7,10 +8,10 @@ namespace ConsoleGameFramework_KR.Scenes
     {
         private static readonly List<MenuOption> Menu = new List<MenuOption>
         {
-        new MenuOption(1, "검 (30 G)","검 - 3연속으로 커맨드를 정확히 입력하면 크리티컬 대미지를 입힙니다."),
-        new MenuOption(2, "방패 (50 G)", "방패 - 5연속으로 커맨드를 정확히 입력하면  HP를 회복합니다."),
-        new MenuOption(3, "공격력의 비약 (300 G)", "공격력의 비약 - 플레이어의 기본 공격력을 1 증가시킵니다."),
-        new MenuOption(4, "체력의 비약 (350 G)", "체력의 비약 - 플레이어의 최대 체력을 10 증가시킵니다."),
+        new MenuOption(1, "검 (10 G)","검 - 3연속으로 커맨드를 정확히 입력하면 크리티컬 대미지를 입힙니다."),
+        new MenuOption(2, "방패 (30 G)", "방패 - 5연속으로 커맨드를 정확히 입력하면  HP를 회복합니다."),
+        new MenuOption(3, "공격력의 비약 (50 G)", "공격력의 비약 - 플레이어의 기본 공격력을 1 증가시킵니다."),
+        new MenuOption(4, "체력의 비약 (50 G)", "체력의 비약 - 플레이어의 최대 체력을 10 증가시킵니다."),
         new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
         };
@@ -45,16 +46,14 @@ namespace ConsoleGameFramework_KR.Scenes
                     purchase = ConsoleUI.Confirm("정말로 구매하시겠습니까?");
                     if (purchase)
                     {
-                        EnableMenuOption(Menu, choice);
-                        PurchaseItem(Menu, iManager, choice);
+                        EnableMenuOption(Menu, choice, PurchaseItem(Menu, iManager, choice));
                     }
                     break;
                 case 2:
                     purchase = ConsoleUI.Confirm("정말로 구매하시겠습니까?");
                     if (purchase)
                     {
-                        EnableMenuOption(Menu, choice);
-                        PurchaseItem(Menu, iManager, choice);
+                        EnableMenuOption(Menu, choice, PurchaseItem(Menu, iManager, choice));
                     }
                     break;
                 case 3:
@@ -81,8 +80,11 @@ namespace ConsoleGameFramework_KR.Scenes
             }
         }
 
-        public void EnableMenuOption(IEnumerable<MenuOption> options, int num)
+        public void EnableMenuOption(IEnumerable<MenuOption> options, int num, bool isPurchase)
         {
+            if (!isPurchase)
+                return;
+
             int index = Menu.FindIndex(option => option.Number == num);
 
             if (index != -1)
@@ -93,23 +95,34 @@ namespace ConsoleGameFramework_KR.Scenes
             }
         }
 
-        public void PurchaseItem(IEnumerable<MenuOption> options, InventoryManager iManager, int num)
+        public bool PurchaseItem(IEnumerable<MenuOption> options, InventoryManager iManager, int num)
         {
             GameManager gManager = GameManager.Instance;
-            if (iManager.InventoryList.Count >= 10)
+            GameSettingManager settingManager = GameSettingManager.Instance;
+            if (iManager.InventoryList.Count >= 7)
             {
                 gManager.Context.AddLog($"2인벤토리가 가득 찼습니다.");
-                return;
+                return false;
             }
 
             int index = Menu.FindIndex(option => option.Number == num);
 
-            if (index != -1)
+            GameManager.Instance.Context.AddLog($"{num}");
+            iManager.itemPrice.TryGetValue((InventoryManager.ItemType)num, out int price);
+            if (price > settingManager.PrintGold())
             {
-                iManager.PurchaseItem(index);
-
-                gManager.Context.AddLog($"{Menu[index].Label}을 구매했습니다.");
+                gManager.Context.AddLog($"금액이 부족하여 구매 실패 / 현재 {settingManager.PrintGold()} G 보유중입니다.");
+                return false;
             }
+            else if (price <= settingManager.PrintGold())
+            {
+                iManager.PurchaseItem(num);
+                settingManager.ChangeGold(price * -1);
+                gManager.Context.AddLog($"{Menu[index].Label}을 구매했습니다. / 현재 {settingManager.PrintGold()} G 보유중입니다.");
+                return true;
+            }
+            return false;
         }
+
     }
 }

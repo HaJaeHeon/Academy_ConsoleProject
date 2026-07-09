@@ -11,9 +11,10 @@ public class BattleScene : SceneBase
 
     string keyStringValue = "";
 
-    int attackCount = 0;
-
     public System.Timers.Timer enemyAttackTimer;
+
+    bool gameStart = false;
+    int attackCount = 0;
 
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
@@ -26,13 +27,15 @@ public class BattleScene : SceneBase
 
     public override SceneKey Key => SceneKey.Battle;
 
+
     public override void Render(GameContext context)
     {
-        //***이 부분 if 위치 바꾸기
-        if (attackCount != 0)
-            attackCount = 0;
-        if (AttackNode.Count <= 2)
+        if(!gameStart)
+        {
             MakeNodes(context);
+            gameStart = true;
+            attackCount = 0;
+        }
         MakeTimer();
         ConsoleUI.Clear();
         ConsoleUI.WriteTitle("전투씬");
@@ -99,10 +102,10 @@ public class BattleScene : SceneBase
         }
         else if (choice.ToString() == keyStringValue)
         {
-            attackCount++;
-            //context.AddLog(choice.ToString());
+            BattleManager.Instance.attackCount++;
+            if (AttackNode.Count <= 2)
+                MakeNodes(context);
             keyStringValue = AttackNode.Dequeue().ToString();
-            //context.AddLog($"peek 값 : {AttackNode.Peek().ToString()}, 큐에 남은 갯수 : {AttackNode.Count} ");
             this.Render(context);
             ConsoleUI.Present();
             BattleManager.BattleOutcome result = BattleManager.Instance.PlayerAttack();
