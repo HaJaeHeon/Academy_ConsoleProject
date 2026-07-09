@@ -59,10 +59,13 @@ public class BattleManager
 		{
 			if (Player.Hp  > 60)
 			{
-				PrintAchievementLog(manager);
+				//PrintAchievementLog(manager);
 				GameSettingManager.Instance.UnlockAchievement(currentEnemy);
 				PrintAchievementLog(manager);
-			}
+            }
+            GameSettingManager setting = GameSettingManager.Instance;
+            setting.ChangeGold(currentEnemy.Cost);
+            manager.Context.AddLog($"Get Gold : {currentEnemy.Cost} / Current Gold : {setting.PrintGold()} Gold");
             return BattleOutcome.Victory;
         }
 
@@ -95,7 +98,7 @@ public class BattleManager
 			manager.Context.AddLog("EnemyDIe");
 			GameSettingManager setting = GameSettingManager.Instance;
 			setting.ChangeGold(currentEnemy.Cost);
-			GameManager.Instance.Context.AddLog(setting.PrintGold().ToString());
+			manager.Context.AddLog($"Get Gold : {currentEnemy.Cost} / Current Gold : {setting.PrintGold()} Gold");
             return BattleOutcome.Victory;
 		}
 	}

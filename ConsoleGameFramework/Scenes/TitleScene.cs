@@ -34,6 +34,7 @@ public class TitleScene : SceneBase
         }, "프로젝트 안내", ConsoleColor.DarkCyan);
 
         ConsoleUI.WriteMenu(Menu, "시작 메뉴");
+        ConsoleUI.WriteLog(context.Logs);
     }
 
     public override void HandleInput(GameContext context)

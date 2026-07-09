@@ -11,6 +11,8 @@ public class BattleScene : SceneBase
 
     string keyStringValue = "";
 
+    int attackCount = 0;
+
     public System.Timers.Timer enemyAttackTimer;
 
     private static readonly List<MenuOption> Menu = new List<MenuOption>
@@ -26,6 +28,8 @@ public class BattleScene : SceneBase
 
     public override void Render(GameContext context)
     {
+        if (attackCount != 0)
+            attackCount = 0;
         if (AttackNode.Count <= 2)
             MakeNodes(context);
         MakeTimer();

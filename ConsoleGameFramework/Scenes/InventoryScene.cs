@@ -7,7 +7,7 @@ namespace ConsoleGameFramework_KR.Scenes
     {
         private static readonly List<MenuOption> Menu = new List<MenuOption>
         {
-        new MenuOption(1, "인벤토리 확인",""),
+        //new MenuOption(1, "인벤토리 확인",""),
         new MenuOption(2, "장비 확인",""),
         new MenuOption(3, "장비 아이템 착용",""),
         new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
@@ -51,9 +51,9 @@ namespace ConsoleGameFramework_KR.Scenes
 
             switch (choice)
             {
-                case 1:
+                //case 1:
                     //iManager.PrintInventory();
-                    break;
+                    //break;
                 case 2:
                     iManager.PrintEquip();
                     break;
