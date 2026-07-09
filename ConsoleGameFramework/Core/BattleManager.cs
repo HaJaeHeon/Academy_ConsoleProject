@@ -38,11 +38,11 @@ public class BattleManager
 		Player = new Player(name, 100, 10, Equipment.None);
 
 		if(currentEnemy == null)
-			currentEnemy = new Enemy(EnemyType.None, "???", 100, 30, "DPS 60", 500, 100);
-        Goblin = new Enemy(EnemyType.Goblin, "고블린", 40, 1, "DPS 1", 1000, 5);
-		Ghost = new Enemy(EnemyType.Ghost, "유령", 20, 2, "DPS 4 ", 500, 15);
-		Hydra = new Enemy(EnemyType.Hydra, "히드라", 60, 2, "DPS 8 ", 250, 40);
-		Boss = new Enemy(EnemyType.Boss, "보스", 100, 8, "DPS 16 ", 500, 1000);
+			currentEnemy = new Enemy(EnemyType.None, "???", 100, 30, "HP : 100 / DPS 60", 500, 100);
+        Goblin = new Enemy(EnemyType.Goblin, "고블린", 60, 2, "HP : 60 / DPS 1", 2000, 5);
+		Ghost = new Enemy(EnemyType.Ghost, "유령", 50, 3, "HP : 50 / DPS 3 ", 1000, 15);
+		Hydra = new Enemy(EnemyType.Hydra, "히드라", 100, 6, "HP: 100 / DPS 6 ", 1000, 40);
+		Boss = new Enemy(EnemyType.Boss, "보스", 1000, 10, "HP : 1000 / DPS 20 ", 500, 1000);
 	}
 	public enum BattleOutcome
 	{
@@ -114,12 +114,12 @@ public class BattleManager
 
 	public void GetPower()
 	{
-		Player.Attack++;
+		Player.Attack += 3;
 	}
 
 	public void GetHealth()
 	{
-		Player.MaxHp += 10;
+		Player.MaxHp += 20;
 		Player.Hp = Player.MaxHp;
 	}
 }

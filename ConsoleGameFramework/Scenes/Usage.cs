@@ -7,8 +7,8 @@ public class UsageScene : SceneBase
 {
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
-        new MenuOption(1, "공격력의 비약 사용", "공격력의 비약 - 플레이어의 기본 공격력을 1 증가시킵니다."),
-        new MenuOption(2, "체력의 비약 사용", "체력의 비약 - 플레이어의 최대 체력을 10 증가시킵니다."),
+        new MenuOption(1, "공격력의 비약 사용", "공격력의 비약 - 플레이어의 기본 공격력을 3 증가시킵니다."),
+        new MenuOption(2, "체력의 비약 사용", "체력의 비약 - 플레이어의 최대 체력을 20 증가시킵니다."),
         new MenuOption(9, "뒤로(인벤토리)", "인벤토리 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
@@ -41,7 +41,7 @@ public class UsageScene : SceneBase
                 {
                     imanager.Use(choice + posionNum);
                     BattleManager.Instance.GetPower();
-                    GameManager.Instance.Context.AddLog($"{BattleManager.Instance.Player.Attack}");
+                    GameManager.Instance.Context.AddLog($"현재 공격력 : {BattleManager.Instance.Player.Attack}");
                     GameManager.Instance.Context.AddLog("공격력의 비약을 사용했습니다.");
                 }
                 else
@@ -54,7 +54,7 @@ public class UsageScene : SceneBase
                 {
                     imanager.Use(choice + posionNum);
                     BattleManager.Instance.GetHealth();
-                    GameManager.Instance.Context.AddLog($"{BattleManager.Instance.Player.MaxHp}");
+                    GameManager.Instance.Context.AddLog($"현재 최대 체력 : {BattleManager.Instance.Player.MaxHp}");
                     GameManager.Instance.Context.AddLog("체력의 비약을 사용했습니다.");
                 }
                 else

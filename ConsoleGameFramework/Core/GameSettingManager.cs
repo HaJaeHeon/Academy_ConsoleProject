@@ -24,7 +24,7 @@ public class GameSettingManager
     public bool achievementsGhost { get; private set; } = false;
     public bool achievementsHydra { get; private set; } = false;
 
-    public int gold { get; private set; } = 10000;
+    public int gold { get; private set; } = 0;
 
     public void UnlockAchievement(Enemy enemy)
     {
@@ -46,8 +46,12 @@ public class GameSettingManager
                 return;
             achievementsHydra = true;
         }
+        else
+        {
+            return;
+        }
 
-        GameManager.Instance.Context.AddLog($"업적 달성 : HP 60% 이상으로 {enemy.Name} 처치");
+        GameManager.Instance.Context.AddLog($"*업적 달성 : HP 60% 이상으로 {enemy.Name} 처치*");
     }
 
     public void ChangeGold(int amount)

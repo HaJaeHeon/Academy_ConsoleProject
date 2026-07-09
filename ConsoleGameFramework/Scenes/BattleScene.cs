@@ -20,7 +20,7 @@ public class BattleScene : SceneBase
         new MenuOption(1, "1 공격","몬스터를 공격합니다."),
         new MenuOption(2, "2 공격","몬스터를 공격합니다."),
         new MenuOption(3, "3 공격","몬스터를 공격합니다."),
-        new MenuOption(9, "시작 화면으로", "전투를 포기하고, 첫 화면으로 돌아갑니다."),
+        //new MenuOption(9, "시작 화면으로", "전투를 포기하고, 첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
 
@@ -28,6 +28,7 @@ public class BattleScene : SceneBase
 
     public override void Enter(GameContext context)
     {
+        BattleManager.Instance.Player.Hp = BattleManager.Instance.Player.MaxHp;
         MakeNodes(context);
         attackCount = 0;
     }
@@ -88,11 +89,11 @@ public class BattleScene : SceneBase
         this.Render(context);
         //consolekey를 이용해서 키 값을 받아옴
         int choice = ConsoleUI.ReadMenuWithConsoleKey(Menu);
-        if(choice == 9)
-        {
-            context.Game.ChangeScene(SceneKey.Start);
-        }
-        else if (choice == 0)
+        //if(choice == 9)
+        //{
+        //    context.Game.ChangeScene(SceneKey.Start);
+        //}
+        if (choice == 0)
         {
             StopTimer();
             context.Game.RequestQuit();
@@ -116,13 +117,13 @@ public class BattleScene : SceneBase
         {
             StopTimer();
             context.AddLog($"플레이어: {result}");
-            context.Game.ChangeScene(SceneKey.Title);
+            context.Game.ChangeScene(SceneKey.Start);
         }
         else if (result == BattleManager.BattleOutcome.Defeat)
         {
             StopTimer();
             context.AddLog($"플레이어. {result}");
-            context.Game.ChangeScene(SceneKey.Title);
+            context.Game.ChangeScene(SceneKey.Start);
         }
     }
 

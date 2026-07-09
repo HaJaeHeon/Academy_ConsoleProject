@@ -10,8 +10,8 @@ namespace ConsoleGameFramework_KR.Scenes
         {
         new MenuOption(1, "검 (10 G)","검 - 3연속으로 커맨드를 정확히 입력하면 크리티컬 대미지를 입힙니다."),
         new MenuOption(2, "방패 (30 G)", "방패 - 5연속으로 커맨드를 정확히 입력하면  HP를 회복합니다."),
-        new MenuOption(3, "공격력의 비약 (50 G)", "공격력의 비약 - 플레이어의 기본 공격력을 1 증가시킵니다."),
-        new MenuOption(4, "체력의 비약 (50 G)", "체력의 비약 - 플레이어의 최대 체력을 10 증가시킵니다."),
+        new MenuOption(3, "공격력의 비약 (50 G)", "공격력의 비약 - 플레이어의 기본 공격력을 3 증가시킵니다."),
+        new MenuOption(4, "체력의 비약 (50 G)", "체력의 비약 - 플레이어의 최대 체력을 20 증가시킵니다."),
         new MenuOption(9, "시작 화면으로 ", "첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
         };
@@ -27,7 +27,10 @@ namespace ConsoleGameFramework_KR.Scenes
             ConsoleUI.Clear();
             ConsoleUI.WriteTitle("Shop 화면", "구매할 장비아이템을 고르세요");
             ConsoleUI.WriteSubtitle("장비는 1개씩만 구매 가능하고 비약들은 여러개 구매 가능합니다. \n  비약들은 인벤토리 내에서 사용 가능합니다.");
-
+            ConsoleUI.WriteBox(new[]
+        {
+           $"현재 가지고 있는 골드 : {GameSettingManager.Instance.PrintGold()} G "
+        }, $"현재 보유한 업적 : 고블린 {GameSettingManager.Instance.achievementsGoblin} / 유령 {GameSettingManager.Instance.achievementsGhost} / 히드라 {GameSettingManager.Instance.achievementsHydra}", ConsoleColor.DarkCyan);
             ConsoleUI.WriteMenu(Menu, "행동 선택");
             ConsoleUI.WriteLog(context.Logs);
         }
