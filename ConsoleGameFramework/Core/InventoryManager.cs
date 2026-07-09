@@ -49,14 +49,10 @@ public class InventoryManager
     public static int maxInventorySize = 7;
     public List<ItemType> EquipList = new List<ItemType>(maxEquipSize);
     public List<ItemType> InventoryList = new List<ItemType>(maxInventorySize);
+    public List<string> stringEquipList = new List<string>();
     public List<string> stringInventoryList = new List<string>();
+    public List<IReadOnlyList<string>> readOnlyEquipLIst = new List<IReadOnlyList<string>>();
     public List<IReadOnlyList<string>> readOnlyInventoryList = new List<IReadOnlyList<string>>();
-
-    public void Equip(int index)
-    {
-        EquipList.Add(InventoryList[index]);
-        InventoryList.RemoveAt(index);
-    }
 
     public void AddItem(int index)
     {
@@ -67,6 +63,20 @@ public class InventoryManager
         }
         InventoryList.Add((ItemType)index);
         stringInventoryList.Add(((ItemType)index).ToString());
+    }
+
+    public bool VerifyItem(int num)
+    {
+        bool result = InventoryList.Contains((ItemType)num);
+        return result;
+    }
+
+    public void Equip(int index)
+    {
+        EquipList.Add((ItemType) index);
+        stringEquipList.Add(((ItemType)index).ToString());
+        InventoryList.Remove((ItemType)index);
+        stringInventoryList.Remove(((ItemType)index).ToString());
     }
 
     public void PrintInventory()
@@ -81,24 +91,24 @@ public class InventoryManager
             GameManager.Instance.Context.AddLog($"{list}");
         }
         ConsoleUI.WriteTable(
-            headers: new[] { "아이템" },
+            headers: new[] { "인벤토리" },
             rows: readOnlyInventoryList
         );
     }
     public void PrintEquip()
     {
-        readOnlyInventoryList.Clear();
-        foreach (var item in stringInventoryList)
+        readOnlyEquipLIst.Clear();
+        foreach (var item in stringEquipList)
         {
-            readOnlyInventoryList.Add(new[] { item });
+            readOnlyEquipLIst.Add(new[] { item });
         }
-        foreach (var list in InventoryList)
+        foreach (var list in EquipList)
         {
             GameManager.Instance.Context.AddLog($"{list}");
         }
         ConsoleUI.WriteTable(
-            headers: new[] { "아이템" },
-            rows: readOnlyInventoryList
+            headers: new[] { "장비중인 아이템" },
+            rows: readOnlyEquipLIst
         );
     }
 }

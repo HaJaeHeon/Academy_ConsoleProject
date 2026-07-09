@@ -5,9 +5,12 @@ namespace ConsoleGameFramework_KR.Scenes
 {
     public class InventoryScene : SceneBase
     {
+        public Action InsertRender;
+
+
         private static readonly List<MenuOption> Menu = new List<MenuOption>
         {
-        //new MenuOption(1, "인벤토리 확인",""),
+        new MenuOption(1, "인벤토리 확인",""),
         new MenuOption(2, "장비 확인",""),
         new MenuOption(3, "장비 아이템 착용",""),
         new MenuOption(9, "타이틀로", "첫 화면으로 돌아갑니다."),
@@ -27,15 +30,15 @@ namespace ConsoleGameFramework_KR.Scenes
         public override void Enter(GameContext context)
         {
             context.AddLog("Inventory 화면에 들어왔습니다.");
+            InsertRender = null;
         }
 
         public override void Render(GameContext context)
         {
             ConsoleUI.Clear();
             ConsoleUI.WriteTitle("Inventory 화면", "장비할 아이템들을 선택해주세요");
-            iManager.PrintInventory();
+            InsertRender?.Invoke();
             ConsoleUI.WriteMenu(Menu, "행동 선택");
-            //ConsoleUI.WriteLog(context.Logs);
         }
 
         public void SelectInventoryItem()
@@ -51,11 +54,11 @@ namespace ConsoleGameFramework_KR.Scenes
 
             switch (choice)
             {
-                //case 1:
-                    //iManager.PrintInventory();
-                    //break;
+                case 1:
+                    InsertRender = () => iManager.PrintInventory();
+                    break;
                 case 2:
-                    iManager.PrintEquip();
+                    InsertRender = () => iManager.PrintEquip();
                     break;
                 case 3:
                     context.Game.ChangeScene(SceneKey.Equip);

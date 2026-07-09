@@ -13,7 +13,6 @@ public class BattleScene : SceneBase
 
     public System.Timers.Timer enemyAttackTimer;
 
-    bool gameStart = false;
     int attackCount = 0;
 
     private static readonly List<MenuOption> Menu = new List<MenuOption>
@@ -27,15 +26,13 @@ public class BattleScene : SceneBase
 
     public override SceneKey Key => SceneKey.Battle;
 
-
+    public override void Enter(GameContext context)
+    {
+        MakeNodes(context);
+        attackCount = 0;
+    }
     public override void Render(GameContext context)
     {
-        if(!gameStart)
-        {
-            MakeNodes(context);
-            gameStart = true;
-            attackCount = 0;
-        }
         MakeTimer();
         ConsoleUI.Clear();
         ConsoleUI.WriteTitle("전투씬");
