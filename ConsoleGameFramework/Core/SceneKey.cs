@@ -11,8 +11,6 @@ public enum SceneKey
 {
     Title,
     Battle,
-    Sample,
-    Map,
     SelectEnemy,
     Shop,
     Inventory,

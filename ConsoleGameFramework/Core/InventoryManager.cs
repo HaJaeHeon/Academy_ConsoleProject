@@ -13,17 +13,7 @@ public class InventoryManager
         PowerPosion = 3,
         HealthPosion = 4
     }
-    //public class ItemInfo
-    //{
-    //    public ItemType Type;
-    //    public int Price;
 
-    //    public ItemInfo(ItemType type, int price)
-    //    {
-    //        Type = type;
-    //        Price = price;
-    //    }
-    //}
     public Dictionary<ItemType, int> itemPrice = new Dictionary<ItemType, int>()
     {
         {ItemType.Sword, 10 },
@@ -106,6 +96,7 @@ public class InventoryManager
             rows: readOnlyInventoryList
         );
     }
+    //장비중인 아이템 조회
     public void PrintEquip()
     {
         readOnlyEquipLIst.Clear();

@@ -1,7 +1,4 @@
-﻿using System;
-using ConsoleGameFramework.Models;
-using System.Timers;
-using System.Numerics;
+﻿using ConsoleGameFramework.Models;
 
 namespace ConsoleGameFramework.Core;
 
@@ -19,6 +16,7 @@ public class BattleManager
 			return instance;
 		}
 	}
+
 	InventoryManager iManager = InventoryManager.Instance;
 	public  Action OnSwordEffect;
 	public  Action OnShieldEffect;
@@ -62,7 +60,7 @@ public class BattleManager
 	// 플레이어와 적을 생성하고, 초기화하는 함수.
 	public void StartBattleInit(string name)
 	{
-		Player = new Player(name, 100, 10, Equipment.None);
+		Player = new Player(name, 100, 10);
 
 		if(currentEnemy == null)
 			currentEnemy = new Enemy(EnemyType.None, "???", 100, 30, "HP : 100 / DPS 60", 500, 100);
@@ -141,11 +139,12 @@ public class BattleManager
         manager.Context.AddLog($"CurrentEnemy_Achievement : {GameSettingManager.Instance.achievementsHydra}");
     }
 
+	//공격력의 비약 먹었을 때
 	public void GetPower()
 	{
 		Player.Attack += 3;
 	}
-
+	//체력의 비약 먹었을 때
 	public void GetHealth()
 	{
 		Player.MaxHp += 20;

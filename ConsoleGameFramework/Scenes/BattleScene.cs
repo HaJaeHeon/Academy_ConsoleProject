@@ -13,14 +13,11 @@ public class BattleScene : SceneBase
 
     public System.Timers.Timer enemyAttackTimer;
 
-    //int attackCount = 0;
-
     private static readonly List<MenuOption> Menu = new List<MenuOption>
     {
         new MenuOption(1, "1 공격","몬스터를 공격합니다."),
         new MenuOption(2, "2 공격","몬스터를 공격합니다."),
         new MenuOption(3, "3 공격","몬스터를 공격합니다."),
-        //new MenuOption(9, "시작 화면으로", "전투를 포기하고, 첫 화면으로 돌아갑니다."),
         new MenuOption(0, "종료", "프로그램을 종료합니다.")
     };
 
@@ -104,10 +101,6 @@ public class BattleScene : SceneBase
         this.Render(context);
         //consolekey를 이용해서 키 값을 받아옴
         int choice = ConsoleUI.ReadMenuWithConsoleKey(Menu);
-        //if(choice == 9)
-        //{
-        //    context.Game.ChangeScene(SceneKey.Start);
-        //}
         if (choice == 0)
         {
             StopTimer();
@@ -125,7 +118,7 @@ public class BattleScene : SceneBase
             BattleResult(context, result);
         }        
     }
-
+    //전투 결과 
     public void BattleResult(GameContext context, BattleManager.BattleOutcome result)
     {
         if (result == BattleManager.BattleOutcome.Victory)

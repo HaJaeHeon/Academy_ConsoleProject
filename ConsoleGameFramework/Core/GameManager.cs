@@ -41,9 +41,7 @@ public class GameManager
     private void RegisterScenes()
     {
         AddScene(new TitleScene());
-        AddScene(new SampleScene());
         AddScene(new BattleScene());
-        AddScene(new MapScene());
         AddScene(new SelectEnemyScene());
         AddScene(new ShopScene());
         AddScene(new InventoryScene());

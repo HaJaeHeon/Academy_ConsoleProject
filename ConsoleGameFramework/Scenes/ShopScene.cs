@@ -82,7 +82,7 @@ namespace ConsoleGameFramework_KR.Scenes
                     break;
             }
         }
-
+        //장비 아이템 중복 구매를 방지하기 위한 함수
         public void EnableMenuOption(IEnumerable<MenuOption> options, int num, bool isPurchase)
         {
             if (!isPurchase)
@@ -97,14 +97,14 @@ namespace ConsoleGameFramework_KR.Scenes
                 manager.Context.AddLog($"{Menu[index].Label}이 품절 처리되었습니다");
             }
         }
-
+        //아이템 구매 함수
         public bool PurchaseItem(IEnumerable<MenuOption> options, InventoryManager iManager, int num)
         {
             GameManager gManager = GameManager.Instance;
             GameSettingManager settingManager = GameSettingManager.Instance;
             if (iManager.InventoryList.Count >= 7)
             {
-                gManager.Context.AddLog($"2인벤토리가 가득 찼습니다.");
+                gManager.Context.AddLog($"인벤토리가 가득 찼습니다.");
                 return false;
             }
             if(CheckShopAchievement(num) == false)
@@ -131,7 +131,7 @@ namespace ConsoleGameFramework_KR.Scenes
             }
             return false;
         }
-
+        //아이템 구매를 위한 업적 확인 함수
         public bool CheckShopAchievement(int num)
         {
             if (num == 1)

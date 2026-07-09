@@ -27,7 +27,6 @@ public class TitleScene : SceneBase
 
 
         ConsoleUI.WriteMenu(Menu, "행동 선택");
-        //GoTo(context, SceneKey.Start);
     }
 
     public override void HandleInput(GameContext context)
@@ -35,24 +34,6 @@ public class TitleScene : SceneBase
         int choice = ConsoleUI.ReadMenuChoice(Menu);
         switch (choice)
         {
-        //    case 4:
-        //        GoTo(context, SceneKey.Inventory);
-        //        break;
-        //    case 3:
-        //        GoTo(context, SceneKey.Shop);
-        //        break;
-        //    case 2:
-        //        GoTo(context, SceneKey.SelectEnemy);
-        //        break;
-            //case 3:
-            //    GoTo(context, SceneKey.Map);
-            //    break;
-            //case 2:
-            //    name = ConsoleUI.ReadString("이름을 입력하세요");
-            //    BattleManager.Instance.StartBattleInit(name);
-            //    GoTo(context, SceneKey.Battle);
-            //    break;
-
             case 1:
                 name = ConsoleUI.ReadString("플레이어 이름을 입력하세요");
                 BattleManager.Instance.StartBattleInit(name);

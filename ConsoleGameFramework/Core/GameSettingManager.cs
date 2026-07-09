@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using ConsoleGameFramework.Core;
+﻿using ConsoleGameFramework.Core;
 using ConsoleGameFramework.Models;
 
 /// <summary>
@@ -26,6 +24,7 @@ public class GameSettingManager
 
     public int gold { get; private set; } = 0;
 
+    //업적 해제(이미 달성 시 return)
     public void UnlockAchievement(Enemy enemy)
     {
         if(enemy.Type == EnemyType.Goblin)
@@ -53,12 +52,12 @@ public class GameSettingManager
 
         GameManager.Instance.Context.AddLog($"*업적 달성 : HP 60% 이상으로 {enemy.Name} 처치*");
     }
-
+    //골드값 변경
     public void ChangeGold(int amount)
     {
         gold += amount;
     }
-
+    //현재 가지고 있는 골드 조회
     public int PrintGold()
     {
         return gold;

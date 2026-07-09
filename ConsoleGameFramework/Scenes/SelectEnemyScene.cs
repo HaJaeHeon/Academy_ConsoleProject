@@ -18,8 +18,6 @@ public class SelectEnemyScene : SceneBase
 
     public override SceneKey Key => SceneKey.SelectEnemy;
 
-    
-
     public override void Enter(GameContext context)
     {
         context.AddLog("SelectEnemy 화면에 들어왔습니다.");

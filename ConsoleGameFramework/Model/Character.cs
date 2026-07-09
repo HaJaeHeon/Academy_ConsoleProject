@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConsoleGameFramework.Models;
+﻿namespace ConsoleGameFramework.Models;
 
 public class Character
 {
